@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>SILENT FF | Player Stats Hub</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>SILENT FF | Premium Player Stats</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * {
@@ -15,58 +15,121 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background: #0f0f1a;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a0a1a 50%, #0a0a2a 100%);
             color: #fff;
+            min-height: 100vh;
         }
 
-        /* Simple Gradient Background */
-        .bg {
+        /* Animated Gradient Background */
+        .bg-animation {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
+            z-index: -2;
+            background: linear-gradient(135deg, #0a0a0a, #1a0a1a, #0a0a2a, #1a0a1a);
+            background-size: 400% 400%;
+            animation: bgMove 12s ease infinite;
+        }
+
+        @keyframes bgMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Glowing Orbs */
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(100px);
             z-index: -1;
-            background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 100%);
+            pointer-events: none;
+        }
+        .orb-red {
+            width: 400px;
+            height: 400px;
+            background: rgba(255, 71, 87, 0.25);
+            top: -150px;
+            right: -100px;
+            animation: floatRed 18s ease infinite;
+        }
+        .orb-blue {
+            width: 450px;
+            height: 450px;
+            background: rgba(0, 100, 255, 0.2);
+            bottom: -150px;
+            left: -100px;
+            animation: floatBlue 20s ease infinite;
+        }
+        .orb-purple {
+            width: 350px;
+            height: 350px;
+            background: rgba(156, 39, 176, 0.2);
+            top: 40%;
+            left: 30%;
+            animation: floatPurple 15s ease infinite;
+        }
+        @keyframes floatRed {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(-30px, -40px); }
+        }
+        @keyframes floatBlue {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(40px, 30px); }
+        }
+        @keyframes floatPurple {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(20px, -20px) scale(1.1); }
         }
 
         /* Navbar */
         .navbar {
-            padding: 16px 40px;
+            padding: 18px 40px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(15, 15, 26, 0.95);
-            border-bottom: 1px solid rgba(255,255,255,0.08);
+            backdrop-filter: blur(15px);
+            background: rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid rgba(255, 71, 87, 0.2);
             position: sticky;
             top: 0;
             z-index: 100;
         }
-
         .logo {
             display: flex;
             align-items: center;
-            gap: 10px;
-            font-size: 24px;
-            font-weight: 700;
+            gap: 12px;
+            font-size: 26px;
+            font-weight: 800;
         }
-
         .logo i {
-            color: #ff4757;
+            background: linear-gradient(135deg, #ff4757, #ff6b81);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: logoPulse 2s ease infinite;
         }
-
+        @keyframes logoPulse {
+            0%, 100% { text-shadow: 0 0 5px #ff4757; }
+            50% { text-shadow: 0 0 20px #ff4757; }
+        }
+        .logo span {
+            background: linear-gradient(135deg, #ff4757, #ff6b81, #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
         .nav-links {
             display: flex;
-            gap: 25px;
+            gap: 28px;
         }
-
         .nav-links a {
             color: #fff;
             text-decoration: none;
-            opacity: 0.7;
+            font-weight: 500;
             transition: 0.3s;
+            opacity: 0.7;
         }
-
         .nav-links a:hover {
             opacity: 1;
             color: #ff4757;
@@ -75,357 +138,370 @@
         /* Hero */
         .hero {
             text-align: center;
-            padding: 50px 20px 35px;
+            padding: 55px 20px 40px;
         }
-
         .hero h1 {
-            font-size: 44px;
-            font-weight: 700;
-            background: linear-gradient(135deg, #fff, #ff4757);
+            font-size: 52px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff, #ff4757, #7c3aed, #ff6b81);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 12px;
+            background-size: 300% auto;
+            animation: gradientText 4s ease infinite;
+            margin-bottom: 15px;
         }
-
+        @keyframes gradientText {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
         .hero p {
-            color: rgba(255,255,255,0.5);
-            font-size: 16px;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 18px;
         }
 
-        /* Search Box */
+        /* Search Container */
         .search-container {
-            max-width: 500px;
-            margin: 0 auto 40px;
+            max-width: 550px;
+            margin: 0 auto 45px;
             padding: 0 20px;
         }
-
         .search-box {
             display: flex;
-            gap: 10px;
-            background: rgba(255,255,255,0.05);
-            border-radius: 12px;
-            padding: 5px;
-            border: 1px solid rgba(255,255,255,0.1);
+            gap: 12px;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 60px;
+            padding: 6px;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 71, 87, 0.3);
+            transition: all 0.3s;
         }
-
+        .search-box:focus-within {
+            border-color: #ff4757;
+            box-shadow: 0 0 25px rgba(255, 71, 87, 0.3);
+            background: rgba(255, 255, 255, 0.06);
+        }
         .search-box input {
             flex: 1;
             background: transparent;
             border: none;
-            padding: 14px 20px;
+            padding: 15px 25px;
             color: #fff;
-            font-size: 15px;
+            font-size: 16px;
             outline: none;
         }
-
         .search-box input::placeholder {
-            color: rgba(255,255,255,0.4);
+            color: rgba(255, 255, 255, 0.4);
         }
-
         .search-box button {
-            background: #ff4757;
+            background: linear-gradient(135deg, #ff4757, #ff6b81);
             border: none;
-            padding: 10px 28px;
-            border-radius: 10px;
+            padding: 12px 35px;
+            border-radius: 50px;
             color: #fff;
             font-weight: 600;
             cursor: pointer;
             transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
-
         .search-box button:hover {
-            background: #ff6b81;
+            transform: scale(1.02);
+            box-shadow: 0 5px 20px rgba(255, 71, 87, 0.4);
         }
 
         /* Tabs */
         .tabs {
             display: flex;
             justify-content: center;
-            gap: 12px;
-            margin-bottom: 30px;
+            gap: 15px;
+            margin-bottom: 35px;
             flex-wrap: wrap;
             padding: 0 20px;
         }
-
         .tab-btn {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.08);
-            padding: 10px 24px;
-            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 71, 87, 0.3);
+            padding: 12px 32px;
+            border-radius: 40px;
             color: #fff;
-            font-weight: 500;
+            font-weight: 600;
             cursor: pointer;
-            transition: 0.3s;
-            font-size: 14px;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
-
         .tab-btn:hover {
-            background: rgba(255,71,87,0.15);
+            background: rgba(255, 71, 87, 0.15);
             border-color: #ff4757;
+            transform: translateY(-2px);
         }
-
         .tab-btn.active {
-            background: #ff4757;
-            border-color: #ff4757;
+            background: linear-gradient(135deg, #ff4757, #7c3aed);
+            border-color: transparent;
+            box-shadow: 0 5px 15px rgba(255, 71, 87, 0.3);
         }
 
         /* Loader */
         .loader {
             display: none;
             text-align: center;
-            padding: 40px;
+            padding: 50px;
         }
-
         .loader.active {
             display: block;
         }
-
         .spinner {
-            width: 40px;
-            height: 40px;
-            border: 3px solid rgba(255,71,87,0.2);
-            border-top-color: #ff4757;
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(255, 71, 87, 0.2);
+            border-top: 3px solid #ff4757;
+            border-right: 3px solid #7c3aed;
             border-radius: 50%;
-            animation: spin 0.6s linear infinite;
-            margin: 0 auto 12px;
+            animation: spin 0.7s linear infinite;
+            margin: 0 auto 15px;
         }
-
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
 
-        /* Cards */
+        /* Result Cards */
         .result-card {
-            max-width: 750px;
+            max-width: 800px;
             margin: 0 auto 25px;
-            background: rgba(255,255,255,0.03);
-            border-radius: 20px;
-            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(15px);
+            border-radius: 28px;
+            border: 1px solid rgba(255, 71, 87, 0.2);
             overflow: hidden;
+            animation: slideUp 0.5s ease;
+            transition: all 0.3s;
+        }
+        .result-card:hover {
+            border-color: rgba(255, 71, 87, 0.5);
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.3);
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
+        /* Card Header */
         .card-header {
-            background: rgba(255,71,87,0.08);
-            padding: 18px 22px;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            background: linear-gradient(135deg, rgba(255, 71, 87, 0.1), rgba(124, 58, 237, 0.05));
+            padding: 22px 28px;
+            border-bottom: 1px solid rgba(255, 71, 87, 0.15);
         }
-
         .card-title {
-            font-size: 18px;
-            font-weight: 600;
+            font-size: 24px;
+            font-weight: 700;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
+            flex-wrap: wrap;
         }
-
         .card-title i {
             color: #ff4757;
         }
-
-        .card-sub {
+        .level-badge {
+            background: linear-gradient(135deg, #ff4757, #7c3aed);
+            padding: 4px 14px;
+            border-radius: 30px;
             font-size: 12px;
-            color: rgba(255,255,255,0.5);
-            margin-top: 6px;
+            font-weight: 600;
+        }
+        .card-sub {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 10px;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
         }
 
-        /* Info Grid */
-        .info-grid {
+        /* Stats Grid */
+        .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 12px;
-            padding: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 14px;
+            padding: 22px 28px;
         }
-
-        .info-item {
-            background: rgba(255,255,255,0.03);
-            border-radius: 14px;
-            padding: 12px 15px;
+        .stat-item {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 18px;
+            padding: 14px 18px;
+            transition: 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
-
-        .info-label {
+        .stat-item:hover {
+            background: rgba(255, 255, 255, 0.06);
+            transform: translateX(5px);
+            border-color: rgba(255, 71, 87, 0.3);
+        }
+        .stat-label {
             font-size: 11px;
             text-transform: uppercase;
-            color: rgba(255,255,255,0.5);
-            margin-bottom: 5px;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
-
-        .info-value {
-            font-size: 15px;
-            font-weight: 600;
-            word-break: break-word;
+        .stat-value {
+            font-size: 18px;
+            font-weight: 700;
         }
 
         /* Progress Bar */
         .progress-bar {
-            background: rgba(255,255,255,0.1);
-            border-radius: 8px;
-            height: 4px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            height: 6px;
             margin-top: 8px;
             overflow: hidden;
         }
-
         .progress-fill {
-            background: #ff4757;
+            background: linear-gradient(90deg, #ff4757, #7c3aed);
             height: 100%;
             width: 0%;
-            transition: width 0.4s;
+            transition: width 0.5s;
         }
 
         /* Badges */
         .badge {
             display: inline-block;
-            padding: 3px 10px;
+            padding: 4px 12px;
             border-radius: 20px;
-            font-size: 10px;
+            font-size: 11px;
             font-weight: 600;
         }
-        .badge-success { background: rgba(0,255,136,0.15); color: #00ff88; }
-        .badge-warning { background: rgba(255,165,0,0.15); color: #ffa502; }
-        .badge-danger { background: rgba(255,71,87,0.15); color: #ff4757; }
-        .badge-info { background: rgba(0,210,255,0.15); color: #00d2ff; }
+        .badge-success { background: rgba(0, 255, 136, 0.15); color: #00ff88; border: 1px solid rgba(0, 255, 136, 0.3); }
+        .badge-warning { background: rgba(255, 165, 0, 0.15); color: #ffa502; border: 1px solid rgba(255, 165, 0, 0.3); }
+        .badge-danger { background: rgba(255, 71, 87, 0.15); color: #ff4757; border: 1px solid rgba(255, 71, 87, 0.3); }
+        .badge-info { background: rgba(0, 210, 255, 0.15); color: #00d2ff; border: 1px solid rgba(0, 210, 255, 0.3); }
 
         /* Action Buttons */
         .action-buttons {
             display: flex;
-            gap: 12px;
-            padding: 0 20px 20px;
+            gap: 15px;
+            padding: 0 28px 25px;
             flex-wrap: wrap;
         }
-
         .btn {
             flex: 1;
-            padding: 10px;
-            border-radius: 12px;
+            padding: 12px;
+            border-radius: 50px;
             text-align: center;
             font-weight: 600;
-            font-size: 13px;
+            font-size: 14px;
             cursor: pointer;
             transition: 0.3s;
             border: none;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
+            gap: 8px;
         }
-
         .btn-primary {
-            background: #ff4757;
+            background: linear-gradient(135deg, #ff4757, #7c3aed);
             color: #fff;
         }
-
-        .btn-primary:hover {
-            background: #ff6b81;
-        }
-
         .btn-outline {
             background: transparent;
-            border: 1px solid rgba(255,255,255,0.15);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             color: #fff;
         }
-
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 71, 87, 0.4);
+        }
         .btn-outline:hover {
             border-color: #ff4757;
-            background: rgba(255,71,87,0.1);
-        }
-
-        /* Token Form */
-        .token-form {
-            padding: 20px;
-        }
-        .input-group {
-            margin-bottom: 15px;
-        }
-        .input-group label {
-            display: block;
-            font-size: 13px;
-            margin-bottom: 6px;
-            color: rgba(255,255,255,0.7);
-        }
-        .input-group input {
-            width: 100%;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 12px;
-            padding: 12px 15px;
-            color: #fff;
-            font-size: 14px;
-            outline: none;
-        }
-        .input-group input:focus {
-            border-color: #ff4757;
-        }
-        .gen-btn {
-            width: 100%;
-            background: #ff4757;
-            border: none;
-            padding: 12px;
-            border-radius: 12px;
-            color: #fff;
-            font-weight: 600;
-            cursor: pointer;
-            margin-top: 5px;
-        }
-        .gen-btn:hover {
-            background: #ff6b81;
-        }
-
-        /* JSON Pre */
-        .json-pre {
-            background: rgba(0,0,0,0.4);
-            padding: 15px;
-            border-radius: 12px;
-            overflow-x: auto;
-            font-size: 11px;
-            font-family: monospace;
-            color: #00ffaa;
-            margin: 0 20px 20px;
+            background: rgba(255, 71, 87, 0.1);
         }
 
         /* Image Container */
         .img-container {
-            padding: 20px;
+            padding: 25px;
             text-align: center;
         }
         .img-container img {
             max-width: 100%;
-            border-radius: 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+            border: 1px solid rgba(255, 71, 87, 0.2);
+        }
+        .img-container img:hover {
+            transform: scale(1.02);
+            border-color: #ff4757;
         }
         .download-btn {
-            display: inline-block;
-            margin-top: 12px;
-            padding: 8px 16px;
-            background: rgba(255,255,255,0.05);
-            border-radius: 30px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 40px;
             color: #fff;
-            font-size: 12px;
             text-decoration: none;
+            font-size: 13px;
+            transition: 0.3s;
         }
         .download-btn:hover {
             background: #ff4757;
         }
 
+        /* Modal */
+        .image-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        .image-modal.active {
+            display: flex;
+        }
+        .image-modal img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 20px;
+            box-shadow: 0 0 50px rgba(255, 71, 87, 0.3);
+        }
+
         /* Error */
         .error-msg {
+            max-width: 500px;
+            margin: 20px auto;
             padding: 20px;
-            background: rgba(255,71,87,0.1);
-            border: 1px solid rgba(255,71,87,0.3);
-            border-radius: 16px;
+            background: rgba(255, 71, 87, 0.1);
+            border: 1px solid rgba(255, 71, 87, 0.3);
+            border-radius: 20px;
             text-align: center;
             color: #ff6b81;
-            margin: 20px;
         }
 
         /* Footer */
         .footer {
             text-align: center;
-            padding: 30px;
-            color: rgba(255,255,255,0.3);
-            font-size: 12px;
-            border-top: 1px solid rgba(255,255,255,0.05);
+            padding: 35px;
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 13px;
+            border-top: 1px solid rgba(255, 71, 87, 0.1);
             margin-top: 40px;
         }
-
         .footer a {
             color: #ff4757;
             text-decoration: none;
@@ -435,85 +511,89 @@
             display: none;
         }
 
-        @media (max-width: 600px) {
-            .navbar { padding: 12px 20px; }
-            .logo { font-size: 18px; }
-            .hero h1 { font-size: 28px; }
-            .info-grid { grid-template-columns: 1fr; }
+        @media (max-width: 650px) {
+            .navbar { padding: 15px 25px; }
+            .logo { font-size: 20px; }
+            .hero h1 { font-size: 32px; }
+            .search-box { flex-direction: column; border-radius: 30px; padding: 15px; }
+            .search-box button { padding: 12px; }
+            .tab-btn { padding: 8px 20px; font-size: 13px; }
+            .stats-grid { grid-template-columns: 1fr; padding: 20px; }
             .action-buttons { flex-direction: column; }
+            .card-header { padding: 18px 20px; }
+            .card-title { font-size: 20px; }
         }
     </style>
 </head>
 <body>
-    <div class="bg"></div>
+    <div class="bg-animation"></div>
+    <div class="orb orb-red"></div>
+    <div class="orb orb-blue"></div>
+    <div class="orb orb-purple"></div>
 
     <nav class="navbar">
-        <div class="logo"><i class="fas fa-fire"></i> SILENT FF</div>
+        <div class="logo"><i class="fas fa-fire"></i> SILENT <span>FF</span></div>
         <div class="nav-links">
-            <a href="https://t.me/SILENT_GAM3R" target="_blank">Channel</a>
+            <a href="https://t.me/SILENT_GAM3R" target="_blank"><i class="fab fa-telegram"></i> Channel</a>
         </div>
     </nav>
 
     <div class="hero">
         <h1>Free Fire Player Stats</h1>
-        <p>Enter UID to get player info, ban status, token & more</p>
+        <p>Enter UID to get player information, outfit & banner</p>
     </div>
 
     <div class="search-container">
         <div class="search-box">
-            <input type="text" id="uidInput" placeholder="Enter UID (e.g., 1576195175)" onkeypress="if(event.key==='Enter') searchPlayer()">
+            <input type="text" id="uidInput" placeholder="Enter UID (e.g., 13599330571)" onkeypress="if(event.key==='Enter') searchPlayer()">
             <button onclick="searchPlayer()"><i class="fas fa-search"></i> Search</button>
         </div>
     </div>
 
     <div class="tabs">
-        <button class="tab-btn active" onclick="showTab('info')">📊 Player Info</button>
-        <button class="tab-btn" onclick="showTab('ban')">🛡️ Ban Check</button>
-        <button class="tab-btn" onclick="showTab('token')">🔑 Token</button>
-        <button class="tab-btn" onclick="showTab('outfit')">👕 Outfit</button>
-        <button class="tab-btn" onclick="showTab('banner')">🖼️ Banner</button>
+        <button class="tab-btn active" onclick="showTab('info')"><i class="fas fa-user"></i> Player Info</button>
+        <button class="tab-btn" onclick="showTab('outfit')"><i class="fas fa-tshirt"></i> Outfit</button>
+        <button class="tab-btn" onclick="showTab('banner')"><i class="fas fa-image"></i> Banner</button>
     </div>
 
-    <div class="loader" id="loader"><div class="spinner"></div><p>Loading...</p></div>
+    <div class="loader" id="loader"><div class="spinner"></div><p>Fetching data from SILENT API...</p></div>
 
     <div id="infoResult"></div>
-    <div id="banResult" class="hidden"></div>
-    <div id="tokenResult" class="hidden"></div>
     <div id="outfitResult" class="hidden"></div>
     <div id="bannerResult" class="hidden"></div>
 
+    <div id="imageModal" class="image-modal" onclick="closeModal()">
+        <img id="modalImage" src="">
+    </div>
+
     <div class="footer">
-        <p>🔥 Powered by SILENT API | 📢 <a href="https://t.me/SILENT_GAM3R" target="_blank">@SILENT_GAM3R</a></p>
+        <p>🔥 Powered by <strong>SILENT API</strong> | 📢 <a href="https://t.me/SILENT_GAM3R" target="_blank">@SILENT_GAM3R</a></p>
         <p>👨‍💻 Developer: <a href="https://t.me/SIL3NT_KILLER" target="_blank">@SIL3NT_KILLER</a></p>
     </div>
 
     <script>
         let currentUid = '';
-        let currentRegion = 'ind';
+        let currentRegion = 'bd';
 
         function showTab(tab) {
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            const tabs = ['info', 'ban', 'token', 'outfit', 'banner'];
+            const tabs = ['info', 'outfit', 'banner'];
             tabs.forEach(t => document.getElementById(t + 'Result').classList.add('hidden'));
             
             if(tab === 'info') document.querySelector('.tabs button:nth-child(1)').classList.add('active');
-            if(tab === 'ban') document.querySelector('.tabs button:nth-child(2)').classList.add('active');
-            if(tab === 'token') document.querySelector('.tabs button:nth-child(3)').classList.add('active');
-            if(tab === 'outfit') document.querySelector('.tabs button:nth-child(4)').classList.add('active');
-            if(tab === 'banner') document.querySelector('.tabs button:nth-child(5)').classList.add('active');
+            if(tab === 'outfit') document.querySelector('.tabs button:nth-child(2)').classList.add('active');
+            if(tab === 'banner') document.querySelector('.tabs button:nth-child(3)').classList.add('active');
             
             document.getElementById(tab + 'Result').classList.remove('hidden');
             
-            if(tab === 'ban' && currentUid) fetchBanCheck(currentUid);
-            if(tab === 'token') showTokenForm();
             if(tab === 'outfit' && currentUid) fetchOutfit(currentUid, currentRegion);
             if(tab === 'banner' && currentUid) fetchBanner(currentUid);
         }
 
         async function searchPlayer() {
             const uid = document.getElementById('uidInput').value.trim();
-            if(!uid) { showError('Enter UID', 'infoResult'); return; }
-            if(!/^\d{8,11}$/.test(uid)) { showError('Invalid UID', 'infoResult'); return; }
+            if(!uid) { showError('Please enter a UID', 'infoResult'); return; }
+            if(!/^\d{8,11}$/.test(uid)) { showError('Invalid UID! Must be 8-11 digits', 'infoResult'); return; }
             
             currentUid = uid;
             const loader = document.getElementById('loader');
@@ -524,10 +604,10 @@
             resultDiv.classList.remove('hidden');
             
             try {
-                // Get region
+                // Get region first
                 const regionRes = await fetch(`https://region-check-six.vercel.app/?uid=${uid}`);
                 const regionData = await regionRes.json();
-                currentRegion = (regionData.region || 'ind').toLowerCase();
+                currentRegion = (regionData.region || 'bd').toLowerCase();
                 
                 // Get player info
                 const infoRes = await fetch(`https://mafuuuu-info-api.vercel.app/mafu-info?uid=${uid}`);
@@ -545,20 +625,27 @@
             const clan = data.clanBasicInfo || {};
             const credit = data.creditScoreInfo || {};
             const social = data.socialInfo || {};
+            const pet = data.petInfo || {};
             
             const name = basic.nickname || 'Unknown';
             const region = basic.region || 'N/A';
             const level = basic.level || 'N/A';
             const exp = basic.exp || '0';
             const likes = basic.liked || '0';
+            const title = basic.title || 'No Title';
             const brPoints = basic.rankingPoints || '0';
             const csPoints = basic.csRankingPoints || '0';
             const creditScore = credit.creditScore || '0';
             const created = basic.createAt || '0';
+            const lastLogin = basic.lastLoginAt || '0';
             const signature = social.signature || 'No bio';
             const guild = clan.clanName || 'No Guild';
+            const guildLevel = clan.clanLevel || 'N/A';
+            const guildMembers = clan.memberNum || '0';
+            const petName = pet.name || 'No Pet';
+            const petLevel = pet.level || 'N/A';
             
-            // Ranks
+            // Calculate BR Rank
             let brRank = 'Bronze';
             let br = parseInt(brPoints);
             if(br >= 1000) brRank = 'Silver';
@@ -569,6 +656,7 @@
             if(br >= 6000) brRank = 'Mythic';
             if(br >= 7000) brRank = 'Grandmaster';
             
+            // Calculate CS Rank
             let csRank = 'Bronze I';
             let cs = parseInt(csPoints);
             if(cs >= 20) csRank = 'Bronze II';
@@ -579,104 +667,94 @@
             if(cs >= 120) csRank = 'Gold III';
             if(cs >= 140) csRank = 'Elite';
             
+            // Credit Score Status
             let creditClass = 'badge-danger';
             let creditText = 'Poor';
             if(creditScore >= 90) { creditClass = 'badge-success'; creditText = 'Excellent'; }
             else if(creditScore >= 70) { creditClass = 'badge-success'; creditText = 'Good'; }
             else if(creditScore >= 50) { creditClass = 'badge-warning'; creditText = 'Fair'; }
             
-            const createdDate = (created && created !== '0') ? new Date(parseInt(created)*1000).toLocaleDateString() : 'N/A';
+            // Format dates
+            const createdDate = (created && created !== '0') ? new Date(parseInt(created) * 1000).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : 'N/A';
+            const lastLoginDate = (lastLogin && lastLogin !== '0') ? new Date(parseInt(lastLogin) * 1000).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : 'N/A';
+            
+            // Progress percentages
             const expProgress = (parseInt(exp) % 50000) / 50000 * 100;
+            const brProgress = Math.min(100, (br / 7000) * 100);
+            const csProgress = Math.min(100, (cs / 150) * 100);
             
             const html = `
                 <div class="result-card">
                     <div class="card-header">
-                        <div class="card-title"><i class="fas fa-user"></i> ${escapeHtml(name)} <span class="badge badge-info">Level ${level}</span></div>
-                        <div class="card-sub">📱 ${uid} | 🌍 ${region.toUpperCase()}</div>
+                        <div class="card-title">
+                            <i class="fas fa-user"></i> ${escapeHtml(name)}
+                            <span class="level-badge">Level ${level}</span>
+                        </div>
+                        <div class="card-sub">
+                            <span><i class="fas fa-id-card"></i> ${uid}</span>
+                            <span><i class="fas fa-globe"></i> ${region.toUpperCase()}</span>
+                        </div>
                     </div>
-                    <div class="info-grid">
-                        <div class="info-item">
-                            <div class="info-label">🏆 BR RANK</div>
-                            <div class="info-value">${brRank}</div>
-                            <div class="progress-bar"><div class="progress-fill" style="width: ${Math.min(100, br/7000*100)}%"></div></div>
-                            <div style="font-size:11px">${br.toLocaleString()} pts</div>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-label"><i class="fas fa-trophy"></i> BR RANK</div>
+                            <div class="stat-value">${brRank}</div>
+                            <div class="progress-bar"><div class="progress-fill" style="width: ${brProgress}%"></div></div>
+                            <div style="font-size: 12px; margin-top: 5px; color: #aaa;">${br.toLocaleString()} points</div>
                         </div>
-                        <div class="info-item">
-                            <div class="info-label">🎮 CS RANK</div>
-                            <div class="info-value">${csRank}</div>
-                            <div class="progress-bar"><div class="progress-fill" style="width: ${Math.min(100, cs/150*100)}%"></div></div>
-                            <div style="font-size:11px">${cs.toLocaleString()} pts</div>
+                        <div class="stat-item">
+                            <div class="stat-label"><i class="fas fa-gamepad"></i> CS RANK</div>
+                            <div class="stat-value">${csRank}</div>
+                            <div class="progress-bar"><div class="progress-fill" style="width: ${csProgress}%"></div></div>
+                            <div style="font-size: 12px; margin-top: 5px; color: #aaa;">${cs.toLocaleString()} points</div>
                         </div>
-                        <div class="info-item"><div class="info-label">❤️ LIKES</div><div class="info-value">${parseInt(likes).toLocaleString()}</div></div>
-                        <div class="info-item"><div class="info-label">💳 CREDIT</div><div class="info-value"><span class="badge ${creditClass}">${creditScore} (${creditText})</span></div></div>
-                        <div class="info-item"><div class="info-label">📈 EXP</div><div class="info-value">${parseInt(exp).toLocaleString()} XP</div><div class="progress-bar"><div class="progress-fill" style="width: ${expProgress}%"></div></div></div>
-                        <div class="info-item"><div class="info-label">📅 CREATED</div><div class="info-value">${createdDate}</div></div>
-                        <div class="info-item"><div class="info-label">✍️ SIGNATURE</div><div class="info-value" style="font-size:13px">${escapeHtml(signature)}</div></div>
-                        <div class="info-item"><div class="info-label">🏛️ GUILD</div><div class="info-value">${escapeHtml(guild)}</div></div>
+                        <div class="stat-item">
+                            <div class="stat-label"><i class="fas fa-heart"></i> LIKES</div>
+                            <div class="stat-value">${parseInt(likes).toLocaleString()}</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label"><i class="fas fa-credit-card"></i> CREDIT SCORE</div>
+                            <div class="stat-value"><span class="badge ${creditClass}">${creditScore} (${creditText})</span></div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label"><i class="fas fa-chart-line"></i> EXPERIENCE</div>
+                            <div class="stat-value">${parseInt(exp).toLocaleString()} XP</div>
+                            <div class="progress-bar"><div class="progress-fill" style="width: ${expProgress}%"></div></div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label"><i class="fas fa-calendar"></i> CREATED</div>
+                            <div class="stat-value">${createdDate}</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label"><i class="fas fa-clock"></i> LAST LOGIN</div>
+                            <div class="stat-value">${lastLoginDate}</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label"><i class="fas fa-flag"></i> TITLE</div>
+                            <div class="stat-value" style="font-size: 14px;">${escapeHtml(title)}</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label"><i class="fas fa-signature"></i> SIGNATURE</div>
+                            <div class="stat-value" style="font-size: 13px;">${escapeHtml(signature)}</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label"><i class="fas fa-building"></i> GUILD</div>
+                            <div class="stat-value">${escapeHtml(guild)}</div>
+                            <div style="font-size: 12px; color: #aaa;">Level ${guildLevel} • ${guildMembers} members</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label"><i class="fas fa-paw"></i> PET</div>
+                            <div class="stat-value">${escapeHtml(petName)}</div>
+                            <div style="font-size: 12px; color: #aaa;">Level ${petLevel}</div>
+                        </div>
                     </div>
                     <div class="action-buttons">
-                        <button class="btn btn-primary" onclick="showTab('outfit'); fetchOutfit('${uid}', '${region}')"><i class="fas fa-tshirt"></i> Outfit</button>
-                        <button class="btn btn-outline" onclick="showTab('banner'); fetchBanner('${uid}')"><i class="fas fa-image"></i> Banner</button>
+                        <button class="btn btn-primary" onclick="showTab('outfit'); fetchOutfit('${uid}', '${region}')"><i class="fas fa-tshirt"></i> View Outfit</button>
+                        <button class="btn btn-outline" onclick="showTab('banner'); fetchBanner('${uid}')"><i class="fas fa-image"></i> View Banner</button>
                     </div>
                 </div>
             `;
             document.getElementById('infoResult').innerHTML = html;
-        }
-
-        async function fetchBanCheck(uid) {
-            const container = document.getElementById('banResult');
-            container.innerHTML = '<div class="loader active" style="padding:20px"><div class="spinner"></div></div>';
-            
-            try {
-                const res = await fetch(`https://silent-bancheck-api.vercel.app/bancheck?uid=${uid}`);
-                const data = await res.json();
-                const isBanned = data.ban_status?.toLowerCase() !== 'not banned';
-                container.innerHTML = `
-                    <div class="result-card">
-                        <div class="card-header"><div class="card-title"><i class="fas fa-shield-alt"></i> Ban Check Result</div></div>
-                        <div class="info-grid">
-                            <div class="info-item"><div class="info-label">Player</div><div class="info-value">${escapeHtml(data.nickname || 'N/A')}</div></div>
-                            <div class="info-item"><div class="info-label">UID</div><div class="info-value">${uid}</div></div>
-                            <div class="info-item"><div class="info-label">Region</div><div class="info-value">${(data.region || 'N/A').toUpperCase()}</div></div>
-                            <div class="info-item"><div class="info-label">Status</div><div class="info-value"><span class="badge ${isBanned ? 'badge-danger' : 'badge-success'}">${isBanned ? '❌ BANNED' : '✅ NOT BANNED'}</span></div></div>
-                            <div class="info-item"><div class="info-label">Ban Period</div><div class="info-value">${data.ban_period || 'N/A'}</div></div>
-                        </div>
-                    </div>
-                `;
-            } catch(e) {
-                container.innerHTML = `<div class="error-msg">Error: ${e.message}</div>`;
-            }
-        }
-
-        function showTokenForm() {
-            const container = document.getElementById('tokenResult');
-            container.innerHTML = `
-                <div class="result-card">
-                    <div class="card-header"><div class="card-title"><i class="fas fa-key"></i> JWT Token Generator</div></div>
-                    <div class="token-form">
-                        <div class="input-group"><label>UID</label><input type="text" id="tokenUid" placeholder="Enter UID"></div>
-                        <div class="input-group"><label>Password</label><input type="password" id="tokenPass" placeholder="Enter Password"></div>
-                        <button class="gen-btn" onclick="generateToken()">Generate Token</button>
-                    </div>
-                    <div id="tokenOutput"></div>
-                </div>
-            `;
-        }
-
-        async function generateToken() {
-            const uid = document.getElementById('tokenUid')?.value.trim();
-            const pass = document.getElementById('tokenPass')?.value.trim();
-            const output = document.getElementById('tokenOutput');
-            if(!uid || !pass) { output.innerHTML = '<div class="error-msg">Enter UID and Password</div>'; return; }
-            output.innerHTML = '<div class="loader active" style="padding:20px"><div class="spinner"></div></div>';
-            
-            try {
-                const res = await fetch(`https://uid-password-to-jwt-f1uw.vercel.app/token?uid=${uid}&password=${encodeURIComponent(pass)}`);
-                const data = await res.json();
-                output.innerHTML = `<div class="json-pre">${JSON.stringify(data, null, 2)}</div>`;
-            } catch(e) {
-                output.innerHTML = `<div class="error-msg">Error: ${e.message}</div>`;
-            }
         }
 
         async function fetchOutfit(uid, region) {
@@ -685,10 +763,13 @@
             const imgUrl = `https://silent-outfit-api.vercel.app/outfit-image?uid=${uid}&region=${regionLower}&key=SILENT`;
             container.innerHTML = `
                 <div class="result-card">
-                    <div class="card-header"><div class="card-title"><i class="fas fa-tshirt"></i> Player Outfit</div><div class="card-sub">UID: ${uid} | Region: ${regionUpper}</div></div>
+                    <div class="card-header">
+                        <div class="card-title"><i class="fas fa-tshirt"></i> Player Outfit</div>
+                        <div class="card-sub">UID: ${uid} | Region: ${region.toUpperCase()}</div>
+                    </div>
                     <div class="img-container">
-                        <img src="${imgUrl}" onerror="this.src='https://placehold.co/500x300/1a1a2e/ff4757?text=Outfit+Not+Found'">
-                        <a href="${imgUrl}" download="outfit_${uid}.jpg" class="download-btn"><i class="fas fa-download"></i> Download</a>
+                        <img src="${imgUrl}" onclick="openModal('${imgUrl}')" onerror="this.src='https://placehold.co/600x400/1a1a2e/ff4757?text=Outfit+Not+Found'">
+                        <div><a href="${imgUrl}" download="outfit_${uid}.jpg" class="download-btn"><i class="fas fa-download"></i> Download Outfit</a></div>
                     </div>
                 </div>
             `;
@@ -699,24 +780,45 @@
             const imgUrl = `https://banner-views-pink.vercel.app/profile?uid=${uid}`;
             container.innerHTML = `
                 <div class="result-card">
-                    <div class="card-header"><div class="card-title"><i class="fas fa-image"></i> Player Banner</div><div class="card-sub">UID: ${uid}</div></div>
+                    <div class="card-header">
+                        <div class="card-title"><i class="fas fa-image"></i> Player Banner</div>
+                        <div class="card-sub">UID: ${uid}</div>
+                    </div>
                     <div class="img-container">
-                        <img src="${imgUrl}" onerror="this.src='https://placehold.co/800x300/1a1a2e/ff4757?text=Banner+Not+Found'">
-                        <a href="${imgUrl}" download="banner_${uid}.jpg" class="download-btn"><i class="fas fa-download"></i> Download</a>
+                        <img src="${imgUrl}" onclick="openModal('${imgUrl}')" onerror="this.src='https://placehold.co/800x300/1a1a2e/ff4757?text=Banner+Not+Found'">
+                        <div><a href="${imgUrl}" download="banner_${uid}.jpg" class="download-btn"><i class="fas fa-download"></i> Download Banner</a></div>
                     </div>
                 </div>
             `;
         }
 
+        function openModal(imgSrc) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            modalImg.src = imgSrc;
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('imageModal').classList.remove('active');
+        }
+
         function showError(msg, containerId) {
             const container = document.getElementById(containerId);
-            container.innerHTML = `<div class="error-msg">⚠️ ${escapeHtml(msg)}</div>`;
-            setTimeout(() => { if(container.innerHTML.includes(msg)) container.innerHTML = ''; }, 4000);
+            container.innerHTML = `<div class="error-msg"><i class="fas fa-exclamation-triangle"></i> ${escapeHtml(msg)}</div>`;
+            setTimeout(() => {
+                if(container.innerHTML.includes(msg)) container.innerHTML = '';
+            }, 4000);
         }
 
         function escapeHtml(str) {
             if(!str) return '';
-            return String(str).replace(/[&<>]/g, m => m === '&' ? '&amp;' : (m === '<' ? '&lt;' : '&gt;'));
+            return String(str).replace(/[&<>]/g, function(m) {
+                if(m === '&') return '&amp;';
+                if(m === '<') return '&lt;';
+                if(m === '>') return '&gt;';
+                return m;
+            });
         }
     </script>
 </body>
