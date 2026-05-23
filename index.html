@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>SILENT FF | Player Stats</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>SILENT FF | Ultimate Player Stats Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * {
@@ -15,10 +15,76 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #0f0f1a 100%);
-            min-height: 100vh;
+            background: #0a0a0f;
             color: #fff;
+            overflow-x: hidden;
         }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 30%, #16213e 60%, #0f0f1a 100%);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 20% 30%, rgba(255,71,87,0.15) 0%, transparent 40%),
+                        radial-gradient(circle at 80% 70%, rgba(0, 210, 255, 0.1) 0%, transparent 45%);
+            animation: slowDrift 20s ease infinite;
+        }
+
+        @keyframes slowDrift {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(-2%, -1.5%) rotate(1deg); }
+            100% { transform: translate(0, 0) rotate(0deg); }
+        }
+
+        /* Floating Particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            background: radial-gradient(circle, #ff4757, transparent);
+            border-radius: 50%;
+            opacity: 0.4;
+            animation: floatUp linear infinite;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            10% { opacity: 0.5; }
+            90% { opacity: 0.3; }
+            100% { transform: translateY(-20vh) scale(1.5); opacity: 0; }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: linear-gradient(135deg, #ff4757, #ff6b81); border-radius: 10px; }
 
         /* Navbar */
         .navbar {
@@ -26,9 +92,9 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(0,0,0,0.3);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(20px);
+            background: rgba(10, 10, 20, 0.3);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
             position: sticky;
             top: 0;
             z-index: 100;
@@ -37,128 +103,185 @@
         .logo {
             display: flex;
             align-items: center;
-            gap: 10px;
-            font-size: 24px;
-            font-weight: 800;
+            gap: 12px;
         }
 
-        .logo i {
-            color: #ff4757;
+        .logo-icon {
+            font-size: 34px;
             animation: pulse 2s infinite;
         }
 
         @keyframes pulse {
-            0%, 100% { text-shadow: 0 0 5px #ff4757; }
-            50% { text-shadow: 0 0 20px #ff4757; }
+            0%, 100% { transform: scale(1); text-shadow: 0 0 10px #ff4757; }
+            50% { transform: scale(1.1); text-shadow: 0 0 25px #ff4757; }
+        }
+
+        .logo-text {
+            font-size: 26px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ff4757, #ff6b81, #ffa502);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .nav-links {
             display: flex;
-            gap: 25px;
+            gap: 30px;
         }
 
         .nav-links a {
             color: #fff;
             text-decoration: none;
-            opacity: 0.7;
+            font-weight: 500;
             transition: 0.3s;
+            opacity: 0.7;
+            position: relative;
         }
 
-        .nav-links a:hover {
-            opacity: 1;
-            color: #ff4757;
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #ff4757, #ff6b81);
+            transition: width 0.3s;
         }
 
-        /* Hero */
+        .nav-links a:hover::after { width: 100%; }
+        .nav-links a:hover { opacity: 1; }
+
+        /* Hero Section */
         .hero {
             text-align: center;
-            padding: 50px 20px 35px;
+            padding: 55px 20px 40px;
         }
 
         .hero h1 {
-            font-size: 48px;
+            font-size: 54px;
             font-weight: 800;
-            background: linear-gradient(135deg, #fff, #ff4757);
+            background: linear-gradient(135deg, #ffffff, #ff4757, #ff6b81, #ffa502);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-size: 300% auto;
+            animation: heroGradient 4s ease infinite;
+        }
+
+        @keyframes heroGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         .hero p {
             color: rgba(255,255,255,0.6);
-            margin-top: 10px;
+            font-size: 18px;
+            margin-top: 15px;
         }
 
-        /* Search Box */
+        /* Search Container */
         .search-container {
-            max-width: 500px;
-            margin: 0 auto 40px;
+            max-width: 580px;
+            margin: 0 auto 45px;
             padding: 0 20px;
         }
 
         .search-box {
             display: flex;
-            gap: 10px;
-            background: rgba(255,255,255,0.05);
-            border-radius: 50px;
-            padding: 5px;
+            gap: 12px;
+            background: rgba(255,255,255,0.04);
+            border-radius: 70px;
+            padding: 6px;
+            backdrop-filter: blur(10px);
             border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .search-box:focus-within {
+            border-color: #ff4757;
+            box-shadow: 0 0 25px rgba(255,71,87,0.35);
+            background: rgba(255,255,255,0.07);
         }
 
         .search-box input {
             flex: 1;
             background: transparent;
             border: none;
-            padding: 14px 20px;
+            padding: 16px 26px;
             color: #fff;
             font-size: 16px;
+            font-weight: 500;
             outline: none;
+        }
+
+        .search-box input::placeholder {
+            color: rgba(255,255,255,0.4);
         }
 
         .search-box button {
             background: linear-gradient(135deg, #ff4757, #ff6b81);
             border: none;
-            padding: 10px 25px;
-            border-radius: 40px;
+            padding: 12px 38px;
+            border-radius: 60px;
             color: #fff;
-            font-weight: 600;
+            font-weight: 700;
+            font-size: 15px;
             cursor: pointer;
-            transition: 0.3s;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .search-box button:hover {
-            transform: scale(1.02);
+            transform: scale(1.03);
+            box-shadow: 0 8px 20px rgba(255,71,87,0.4);
         }
 
         /* Tabs */
         .tabs {
             display: flex;
             justify-content: center;
-            gap: 15px;
-            margin-bottom: 30px;
+            gap: 18px;
+            margin-bottom: 35px;
             flex-wrap: wrap;
+            padding: 0 20px;
         }
 
         .tab-btn {
-            background: rgba(255,255,255,0.05);
+            background: rgba(255,255,255,0.04);
             border: 1px solid rgba(255,255,255,0.1);
-            padding: 10px 25px;
-            border-radius: 30px;
+            padding: 12px 32px;
+            border-radius: 50px;
             color: #fff;
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 15px;
             cursor: pointer;
-            transition: 0.3s;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            backdrop-filter: blur(10px);
         }
 
-        .tab-btn:hover, .tab-btn.active {
+        .tab-btn:hover {
+            background: rgba(255,71,87,0.15);
+            border-color: rgba(255,71,87,0.4);
+            transform: translateY(-3px);
+        }
+
+        .tab-btn.active {
             background: linear-gradient(135deg, #ff4757, #ff6b81);
             border-color: transparent;
+            box-shadow: 0 5px 20px rgba(255,71,87,0.4);
         }
 
         /* Loader */
         .loader {
             display: none;
             text-align: center;
-            padding: 40px;
+            padding: 60px;
         }
 
         .loader.active {
@@ -166,268 +289,431 @@
         }
 
         .spinner {
-            width: 45px;
-            height: 45px;
+            width: 55px;
+            height: 55px;
             border: 3px solid rgba(255,71,87,0.2);
-            border-top-color: #ff4757;
+            border-top: 3px solid #ff4757;
+            border-right: 3px solid #ff6b81;
             border-radius: 50%;
             animation: spin 0.7s linear infinite;
-            margin: 0 auto 15px;
+            margin: 0 auto 18px;
         }
 
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
 
-        /* Result Box */
-        .result-box {
-            max-width: 700px;
-            margin: 0 auto 25px;
-            background: rgba(0,0,0,0.5);
-            border-radius: 20px;
-            border: 1px solid rgba(255,71,87,0.3);
-            overflow: hidden;
-            animation: fadeIn 0.4s ease;
+        .loader p {
+            color: rgba(255,255,255,0.6);
+            font-size: 14px;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
+        /* Result Cards */
+        .result-card {
+            max-width: 800px;
+            margin: 0 auto 30px;
+            background: rgba(255,255,255,0.03);
+            backdrop-filter: blur(12px);
+            border-radius: 28px;
+            border: 1px solid rgba(255,255,255,0.08);
+            overflow: hidden;
+            animation: slideUp 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(40px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .result-header {
-            background: rgba(255,71,87,0.1);
-            padding: 15px 20px;
-            border-bottom: 1px solid rgba(255,71,87,0.2);
+        .card-header {
+            background: linear-gradient(135deg, rgba(255,71,87,0.12), rgba(255,107,129,0.04));
+            padding: 22px 28px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
         }
 
-        .result-header h3 {
+        .card-title {
+            font-size: 22px;
+            font-weight: 700;
             display: flex;
             align-items: center;
-            gap: 10px;
-            font-size: 18px;
+            gap: 12px;
         }
 
-        .result-content {
-            padding: 20px;
-            font-family: 'Courier New', monospace;
-            font-size: 13px;
-            line-height: 1.6;
-            color: #00ffaa;
-            white-space: pre-wrap;
-            word-break: break-word;
+        .card-title i {
+            color: #ff4757;
+            font-size: 26px;
         }
 
-        .result-content pre {
-            background: rgba(0,0,0,0.3);
-            padding: 15px;
-            border-radius: 12px;
-            overflow-x: auto;
-            font-family: 'Courier New', monospace;
+        .card-subtitle {
             font-size: 12px;
-            color: #00ffaa;
+            color: rgba(255,255,255,0.45);
+            margin-top: 8px;
+            font-family: monospace;
         }
 
         /* Info Grid */
         .info-grid {
+            padding: 22px 25px;
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 12px;
-            padding: 20px;
+            gap: 16px;
         }
 
-        .info-card {
-            background: rgba(255,255,255,0.05);
-            border-radius: 14px;
-            padding: 12px 15px;
-            transition: 0.2s;
+        .info-item {
+            background: rgba(255,255,255,0.04);
+            border-radius: 20px;
+            padding: 14px 18px;
+            transition: all 0.2s ease;
+            border: 1px solid rgba(255,255,255,0.03);
         }
 
-        .info-card:hover {
+        .info-item:hover {
             background: rgba(255,255,255,0.08);
+            transform: translateX(4px);
+            border-color: rgba(255,71,87,0.2);
         }
 
         .info-label {
             font-size: 11px;
             text-transform: uppercase;
+            letter-spacing: 1.5px;
             color: rgba(255,255,255,0.5);
-            margin-bottom: 5px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
         .info-value {
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 600;
             word-break: break-word;
         }
 
-        .badge {
-            display: inline-block;
-            padding: 3px 10px;
-            border-radius: 20px;
-            font-size: 10px;
-            font-weight: 600;
-        }
-        .badge-success { background: rgba(0,255,136,0.15); color: #00ff88; }
-        .badge-danger { background: rgba(255,71,87,0.15); color: #ff4757; }
-        .badge-info { background: rgba(0,210,255,0.15); color: #00d2ff; }
-
+        /* Progress Bar */
         .progress-bar {
             background: rgba(255,255,255,0.1);
-            border-radius: 8px;
-            height: 4px;
+            border-radius: 12px;
+            height: 6px;
             margin-top: 8px;
             overflow: hidden;
         }
+
         .progress-fill {
             background: linear-gradient(90deg, #ff4757, #ff6b81);
             height: 100%;
+            border-radius: 12px;
             width: 0%;
-            transition: width 0.5s;
+            transition: width 0.6s ease;
         }
 
-        /* Form */
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .badge-success { background: rgba(0,255,136,0.15); color: #00ff88; border: 1px solid rgba(0,255,136,0.3); }
+        .badge-danger { background: rgba(255,71,87,0.15); color: #ff4757; border: 1px solid rgba(255,71,87,0.3); }
+        .badge-warning { background: rgba(255,165,0,0.15); color: #ffa502; border: 1px solid rgba(255,165,0,0.3); }
+        .badge-info { background: rgba(0,210,255,0.15); color: #00d2ff; border: 1px solid rgba(0,210,255,0.3); }
+
+        /* ASCII Box */
+        .ascii-box {
+            padding: 20px 25px;
+        }
+        .ascii-box pre {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 18px;
+            border-radius: 20px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            color: #00ffaa;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            padding: 0 25px 22px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px 18px;
+            border-radius: 50px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #ff4757, #ff6b81);
+            color: #fff;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #fff;
+        }
+
+        .btn-outline:hover {
+            border-color: #ff4757;
+            background: rgba(255,71,87,0.1);
+            transform: translateY(-2px);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255,71,87,0.3);
+        }
+
+        /* Token Form */
         .token-form {
-            padding: 20px;
+            padding: 22px 25px;
         }
         .input-group {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
         .input-group label {
             display: block;
             font-size: 13px;
-            margin-bottom: 6px;
-            color: rgba(255,255,255,0.7);
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 8px;
+            font-weight: 500;
         }
         .input-group input {
             width: 100%;
             background: rgba(255,255,255,0.05);
             border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 12px;
-            padding: 12px 15px;
+            border-radius: 50px;
+            padding: 14px 20px;
             color: #fff;
             font-size: 14px;
             outline: none;
+            transition: all 0.3s;
         }
         .input-group input:focus {
             border-color: #ff4757;
-        }
-        .gen-btn {
-            width: 100%;
-            background: linear-gradient(135deg, #ff4757, #ff6b81);
-            border: none;
-            padding: 12px;
-            border-radius: 12px;
-            color: #fff;
-            font-weight: 600;
-            cursor: pointer;
-            margin-top: 10px;
+            box-shadow: 0 0 15px rgba(255,71,87,0.2);
         }
 
-        .error-msg {
-            padding: 15px;
-            background: rgba(255,71,87,0.15);
+        /* Error Message */
+        .error-message {
+            max-width: 550px;
+            margin: 20px auto;
+            padding: 20px;
+            background: rgba(255,71,87,0.12);
             border: 1px solid rgba(255,71,87,0.3);
-            border-radius: 12px;
+            border-radius: 24px;
             text-align: center;
             color: #ff6b81;
-            margin: 20px;
+            backdrop-filter: blur(10px);
         }
 
+        /* Footer */
         .footer {
             text-align: center;
-            padding: 30px;
-            color: rgba(255,255,255,0.4);
+            padding: 35px;
+            color: rgba(255,255,255,0.35);
             font-size: 13px;
-            border-top: 1px solid rgba(255,255,255,0.05);
-            margin-top: 40px;
+            border-top: 1px solid rgba(255,255,255,0.04);
+            margin-top: 50px;
         }
 
         .footer a {
             color: #ff4757;
             text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
         }
 
         .hidden {
             display: none;
         }
 
-        @media (max-width: 600px) {
+        @media (max-width: 650px) {
             .navbar { padding: 15px 20px; }
+            .logo-text { font-size: 18px; }
+            .logo-icon { font-size: 26px; }
             .hero h1 { font-size: 32px; }
+            .hero p { font-size: 14px; }
+            .search-box { flex-direction: column; border-radius: 30px; padding: 15px; }
+            .search-box button { padding: 12px; }
+            .tab-btn { padding: 8px 20px; font-size: 13px; }
             .info-grid { grid-template-columns: 1fr; }
+            .action-buttons { flex-direction: column; }
         }
     </style>
 </head>
 <body>
+    <div class="bg-animation"></div>
+    <div class="particles" id="particles"></div>
+
+    <!-- Navbar -->
     <nav class="navbar">
-        <div class="logo"><i class="fas fa-fire"></i> SILENT FF</div>
+        <div class="logo">
+            <span class="logo-icon">🔥</span>
+            <span class="logo-text">SILENT <span>FF</span></span>
+        </div>
         <div class="nav-links">
-            <a href="#" onclick="showTab('info')">Info</a>
-            <a href="#" onclick="showTab('ban')">Ban Check</a>
-            <a href="#" onclick="showTab('token')">Token</a>
-            <a href="https://t.me/SILENT_GAM3R" target="_blank">Channel</a>
+            <a href="#" onclick="showTab('info')"><i class="fas fa-user"></i> Info</a>
+            <a href="#" onclick="showTab('ban')"><i class="fas fa-shield-alt"></i> Ban Check</a>
+            <a href="#" onclick="showTab('token')"><i class="fas fa-key"></i> Token</a>
+            <a href="https://t.me/SILENT_GAM3R" target="_blank"><i class="fab fa-telegram"></i> Channel</a>
         </div>
     </nav>
 
+    <!-- Hero -->
     <div class="hero">
         <h1>Free Fire Player Stats</h1>
-        <p>Enter UID to get instant information</p>
+        <p>Enter any UID to get instant player information from SILENT API</p>
     </div>
 
+    <!-- Search -->
     <div class="search-container">
         <div class="search-box">
-            <input type="text" id="uidInput" placeholder="Enter UID (e.g., 6892779978)" onkeypress="if(event.key==='Enter') searchPlayer()">
-            <button onclick="searchPlayer()"><i class="fas fa-search"></i> Search</button>
+            <input type="text" id="uidInput" placeholder="Enter UID (e.g., 6892779978, 1576195175)" onkeypress="if(event.key==='Enter') searchPlayer()">
+            <button onclick="searchPlayer()"><i class="fas fa-search"></i> Search Player</button>
         </div>
     </div>
 
+    <!-- Tabs -->
     <div class="tabs">
-        <button class="tab-btn active" onclick="showTab('info')">📊 Player Info</button>
-        <button class="tab-btn" onclick="showTab('ban')">🛡️ Ban Check</button>
-        <button class="tab-btn" onclick="showTab('token')">🔑 Token Generator</button>
+        <button class="tab-btn active" onclick="showTab('info')"><i class="fas fa-user-circle"></i> Player Info</button>
+        <button class="tab-btn" onclick="showTab('ban')"><i class="fas fa-shield-alt"></i> Ban Check</button>
+        <button class="tab-btn" onclick="showTab('token')"><i class="fas fa-key"></i> Token Generator</button>
     </div>
 
-    <div class="loader" id="loader"><div class="spinner"></div><p>Fetching data...</p></div>
+    <!-- Loader -->
+    <div class="loader" id="loader">
+        <div class="spinner"></div>
+        <p><i class="fas fa-sync-alt fa-spin"></i> Fetching data from SILENT API...</p>
+    </div>
 
+    <!-- Results -->
     <div id="infoResult"></div>
     <div id="banResult" class="hidden"></div>
     <div id="tokenResult" class="hidden"></div>
 
+    <!-- Footer -->
     <div class="footer">
-        <p>🔥 Powered by SILENT API | 📢 <a href="https://t.me/SILENT_GAM3R" target="_blank">@SILENT_GAM3R</a></p>
+        <p>🔥 Powered by <strong>SILENT API NETWORK</strong> | 📢 Channel: <a href="https://t.me/SILENT_GAM3R" target="_blank">@SILENT_GAM3R</a></p>
         <p>👨‍💻 Developer: <a href="https://t.me/SIL3NT_KILLER" target="_blank">@SIL3NT_KILLER</a></p>
     </div>
 
     <script>
-        // CORS Proxy (free, no CORS issues)
-        const CORS_PROXY = "https://cors-anywhere.herokuapp.com/";
+        // ======================== PARTICLES ========================
+        function createParticles() {
+            const container = document.getElementById('particles');
+            for(let i = 0; i < 100; i++) {
+                const p = document.createElement('div');
+                p.classList.add('particle');
+                const size = Math.random() * 6 + 2;
+                p.style.width = size + 'px';
+                p.style.height = size + 'px';
+                p.style.left = Math.random() * 100 + '%';
+                p.style.animationDuration = 5 + Math.random() * 15 + 's';
+                p.style.animationDelay = Math.random() * 15 + 's';
+                container.appendChild(p);
+            }
+        }
+        createParticles();
+
         let currentUid = '';
 
-        function showTab(tab) {
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            document.getElementById('infoResult').classList.add('hidden');
-            document.getElementById('banResult').classList.add('hidden');
-            document.getElementById('tokenResult').classList.add('hidden');
-            
-            if(tab === 'info') {
-                document.querySelector('.tabs button:nth-child(1)').classList.add('active');
-                document.getElementById('infoResult').classList.remove('hidden');
-            } else if(tab === 'ban') {
-                document.querySelector('.tabs button:nth-child(2)').classList.add('active');
-                document.getElementById('banResult').classList.remove('hidden');
-                if(currentUid) fetchBanCheck(currentUid);
-            } else if(tab === 'token') {
-                document.querySelector('.tabs button:nth-child(3)').classList.add('active');
-                document.getElementById('tokenResult').classList.remove('hidden');
-                showTokenForm();
+        // ======================== UTILITIES ========================
+        function escapeHtml(str) {
+            if(!str) return '';
+            return String(str).replace(/[&<>]/g, function(m) {
+                if(m === '&') return '&amp;';
+                if(m === '<') return '&lt;';
+                if(m === '>') return '&gt;';
+                return m;
+            });
+        }
+
+        function formatNumber(num) {
+            if(!num) return 'N/A';
+            return parseInt(num).toLocaleString();
+        }
+
+        function formatDate(ts) {
+            if(!ts || ts === '0') return 'N/A';
+            let date = new Date(parseInt(ts) * 1000);
+            return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+        }
+
+        function getRank(points, type) {
+            let p = parseInt(points) || 0;
+            if(type === 'br') {
+                if(p < 1000) return 'Bronze';
+                if(p < 2000) return 'Silver';
+                if(p < 3000) return 'Gold';
+                if(p < 4000) return 'Platinum';
+                if(p < 5000) return 'Diamond';
+                if(p < 6000) return 'Heroic';
+                if(p < 7000) return 'Mythic';
+                return 'Grandmaster';
+            } else {
+                if(p < 20) return 'Bronze I';
+                if(p < 40) return 'Bronze II';
+                if(p < 60) return 'Silver I';
+                if(p < 80) return 'Silver II';
+                if(p < 100) return 'Gold I';
+                if(p < 120) return 'Gold II';
+                if(p < 140) return 'Gold III';
+                return 'Elite';
             }
         }
 
-        // ========== PLAYER INFO ==========
+        function getCreditInfo(score) {
+            let s = parseInt(score) || 0;
+            if(s >= 90) return { emoji: '🟢', class: 'badge-success', text: 'Excellent' };
+            if(s >= 70) return { emoji: '🟡', class: 'badge-warning', text: 'Good' };
+            if(s >= 50) return { emoji: '🟠', class: 'badge-warning', text: 'Fair' };
+            return { emoji: '🔴', class: 'badge-danger', text: 'Poor' };
+        }
+
+        // ======================== TAB MANAGEMENT ========================
+        function showTab(tab) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            const tabs = ['info', 'ban', 'token'];
+            tabs.forEach(t => document.getElementById(t + 'Result').classList.add('hidden'));
+            
+            if(tab === 'info') document.querySelector('.tabs button:nth-child(1)').classList.add('active');
+            if(tab === 'ban') document.querySelector('.tabs button:nth-child(2)').classList.add('active');
+            if(tab === 'token') document.querySelector('.tabs button:nth-child(3)').classList.add('active');
+            
+            document.getElementById(tab + 'Result').classList.remove('hidden');
+            
+            if(tab === 'ban' && currentUid) fetchBanCheck(currentUid);
+            if(tab === 'token') showTokenForm();
+        }
+
+        // ======================== PLAYER INFO ========================
         async function searchPlayer() {
             const uid = document.getElementById('uidInput').value.trim();
-            if(!uid) { showError('Please enter UID', 'infoResult'); return; }
-            if(!/^\d{8,11}$/.test(uid)) { showError('Invalid UID! 8-11 digits', 'infoResult'); return; }
+            if(!uid) { showError('Please enter a valid UID', 'infoResult'); return; }
+            if(!/^\d{8,11}$/.test(uid)) { showError('Invalid UID! Must be 8-11 digits', 'infoResult'); return; }
             
             currentUid = uid;
             const loader = document.getElementById('loader');
@@ -438,8 +724,10 @@
             resultDiv.classList.remove('hidden');
             
             try {
-                const res = await fetch(`${CORS_PROXY}https://mafuuuu-info-api.vercel.app/mafu-info?uid=${uid}`);
-                const data = await res.json();
+                const response = await fetch(`https://mafuuuu-info-api.vercel.app/mafu-info?uid=${uid}`);
+                const data = await response.json();
+                
+                if(!data.basicInfo) throw new Error('Player not found');
                 displayPlayerInfo(data, uid);
             } catch(err) {
                 showError('Failed to fetch: ' + err.message, 'infoResult');
@@ -463,145 +751,165 @@
             const csPoints = basic.csRankingPoints || '0';
             const creditScore = credit.creditScore || '0';
             const created = basic.createAt || '0';
-            const signature = social.signature || 'No bio';
-            const guild = clan.clanName || 'No Guild';
+            const lastLogin = basic.lastLoginAt || '0';
+            const title = basic.title || 'No Title';
+            const signature = social.signature || 'No bio set';
+            const guildName = clan.clanName || 'No Guild';
+            const guildLevel = clan.clanLevel || 'N/A';
+            const guildMembers = clan.memberNum || '0';
             
-            // Calculate ranks
-            let brRank = 'Bronze';
-            let br = parseInt(brPoints);
-            if(br >= 1000) brRank = 'Silver';
-            if(br >= 2000) brRank = 'Gold';
-            if(br >= 3000) brRank = 'Platinum';
-            if(br >= 4000) brRank = 'Diamond';
-            if(br >= 5000) brRank = 'Heroic';
-            if(br >= 6000) brRank = 'Mythic';
-            if(br >= 7000) brRank = 'Grandmaster';
-            
-            let csRank = 'Bronze I';
-            let cs = parseInt(csPoints);
-            if(cs >= 20) csRank = 'Bronze II';
-            if(cs >= 40) csRank = 'Silver I';
-            if(cs >= 60) csRank = 'Silver II';
-            if(cs >= 80) csRank = 'Gold I';
-            if(cs >= 100) csRank = 'Gold II';
-            if(cs >= 120) csRank = 'Gold III';
-            if(cs >= 140) csRank = 'Elite';
-            
-            // Credit score status
-            let creditStatus = 'Poor';
-            let creditClass = 'badge-danger';
-            if(creditScore >= 90) { creditStatus = 'Excellent'; creditClass = 'badge-success'; }
-            else if(creditScore >= 70) { creditStatus = 'Good'; creditClass = 'badge-success'; }
-            else if(creditScore >= 50) { creditStatus = 'Fair'; creditClass = 'badge-info'; }
-            
-            // Format date
-            let createdDate = 'N/A';
-            if(created && created !== '0') {
-                let d = new Date(parseInt(created) * 1000);
-                createdDate = d.toLocaleDateString('en-US', { year:'numeric', month:'short', day:'numeric' });
-            }
-            
+            const brRank = getRank(brPoints, 'br');
+            const csRank = getRank(csPoints, 'cs');
+            const creditInfo = getCreditInfo(creditScore);
             const expProgress = (parseInt(exp) % 50000) / 50000 * 100;
+            const brProgress = Math.min(100, (parseInt(brPoints) / 7000) * 100);
+            const csProgress = Math.min(100, (parseInt(csPoints) / 150) * 100);
             
             const html = `
-                <div class="result-box">
-                    <div class="result-header">
-                        <h3><i class="fas fa-user"></i> ${escapeHtml(name)} <span class="badge badge-info">Level ${level}</span></h3>
-                        <div style="font-size:12px; color:#aaa; margin-top:5px;">UID: ${uid} | Region: ${region.toUpperCase()}</div>
+                <div class="result-card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <i class="fas fa-user"></i> ${escapeHtml(name)}
+                            <span class="badge badge-info">Level ${level}</span>
+                        </div>
+                        <div class="card-subtitle">
+                            <i class="fas fa-id-card"></i> UID: ${uid} | 
+                            <i class="fas fa-globe"></i> Region: ${region.toUpperCase()}
+                        </div>
                     </div>
                     <div class="info-grid">
-                        <div class="info-card">
-                            <div class="info-label">🏆 BR RANK</div>
+                        <div class="info-item">
+                            <div class="info-label"><i class="fas fa-trophy"></i> BR RANK</div>
                             <div class="info-value">${brRank}</div>
-                            <div class="progress-bar"><div class="progress-fill" style="width: ${Math.min(100, br/7000*100)}%"></div></div>
-                            <div style="font-size:11px;">${br.toLocaleString()} points</div>
+                            <div class="progress-bar"><div class="progress-fill" style="width: ${brProgress}%"></div></div>
+                            <div style="font-size:11px; color:#aaa; margin-top:5px;">${formatNumber(brPoints)} points</div>
                         </div>
-                        <div class="info-card">
-                            <div class="info-label">🎮 CS RANK</div>
+                        <div class="info-item">
+                            <div class="info-label"><i class="fas fa-gamepad"></i> CS RANK</div>
                             <div class="info-value">${csRank}</div>
-                            <div class="progress-bar"><div class="progress-fill" style="width: ${Math.min(100, cs/150*100)}%"></div></div>
-                            <div style="font-size:11px;">${cs.toLocaleString()} points</div>
+                            <div class="progress-bar"><div class="progress-fill" style="width: ${csProgress}%"></div></div>
+                            <div style="font-size:11px; color:#aaa; margin-top:5px;">${formatNumber(csPoints)} points</div>
                         </div>
-                        <div class="info-card">
-                            <div class="info-label">❤️ LIKES</div>
-                            <div class="info-value">${parseInt(likes).toLocaleString()}</div>
+                        <div class="info-item">
+                            <div class="info-label"><i class="fas fa-heart"></i> LIKES RECEIVED</div>
+                            <div class="info-value">${formatNumber(likes)}</div>
                         </div>
-                        <div class="info-card">
-                            <div class="info-label">💳 CREDIT SCORE</div>
-                            <div class="info-value"><span class="badge ${creditClass}">${creditScore} (${creditStatus})</span></div>
+                        <div class="info-item">
+                            <div class="info-label"><i class="fas fa-credit-card"></i> CREDIT SCORE</div>
+                            <div class="info-value"><span class="badge ${creditInfo.class}">${creditInfo.emoji} ${creditScore} (${creditInfo.text})</span></div>
                         </div>
-                        <div class="info-card">
-                            <div class="info-label">📈 EXPERIENCE</div>
-                            <div class="info-value">${parseInt(exp).toLocaleString()} XP</div>
+                        <div class="info-item">
+                            <div class="info-label"><i class="fas fa-chart-line"></i> EXPERIENCE</div>
+                            <div class="info-value">${formatNumber(exp)} XP</div>
                             <div class="progress-bar"><div class="progress-fill" style="width: ${expProgress}%"></div></div>
                         </div>
-                        <div class="info-card">
-                            <div class="info-label">📅 CREATED</div>
-                            <div class="info-value">${createdDate}</div>
+                        <div class="info-item">
+                            <div class="info-label"><i class="fas fa-calendar"></i> ACCOUNT CREATED</div>
+                            <div class="info-value">${formatDate(created)}</div>
                         </div>
-                        <div class="info-card">
-                            <div class="info-label">✍️ SIGNATURE</div>
-                            <div class="info-value" style="font-size:13px;">${escapeHtml(signature)}</div>
+                        <div class="info-item">
+                            <div class="info-label"><i class="fas fa-clock"></i> LAST LOGIN</div>
+                            <div class="info-value">${formatDate(lastLogin)}</div>
                         </div>
-                        <div class="info-card">
-                            <div class="info-label">🏛️ GUILD</div>
-                            <div class="info-value">${escapeHtml(guild)}</div>
+                        <div class="info-item">
+                            <div class="info-label"><i class="fas fa-flag"></i> TITLE</div>
+                            <div class="info-value" style="font-size:13px;">${escapeHtml(title)}</div>
                         </div>
+                        <div class="info-item">
+                            <div class="info-label"><i class="fas fa-signature"></i> SIGNATURE</div>
+                            <div class="info-value" style="font-size:12px;">${escapeHtml(signature)}</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label"><i class="fas fa-building"></i> GUILD</div>
+                            <div class="info-value">${escapeHtml(guildName)}</div>
+                            <div style="font-size:11px; color:#aaa;">Level ${guildLevel} | ${guildMembers} members</div>
+                        </div>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary" onclick="fetchOutfit('${uid}', '${region}')"><i class="fas fa-tshirt"></i> Show Outfit</button>
+                        <button class="btn btn-outline" onclick="fetchBanner('${uid}')"><i class="fas fa-image"></i> Show Banner</button>
                     </div>
                 </div>
             `;
             document.getElementById('infoResult').innerHTML = html;
         }
 
-        // ========== BAN CHECK ==========
+        async function fetchOutfit(uid, region) {
+            const regionLower = (region || 'ind').toLowerCase();
+            const url = `https://silent-outfit-api.vercel.app/outfit-image?uid=${uid}&region=${regionLower}&key=SILENT`;
+            const resultDiv = document.getElementById('infoResult');
+            const div = document.createElement('div');
+            div.className = 'result-card';
+            div.innerHTML = `
+                <div class="card-header"><div class="card-title"><i class="fas fa-tshirt"></i> Player Outfit</div><div class="card-subtitle">UID: ${uid} | Region: ${regionLower}</div></div>
+                <div style="padding:20px; text-align:center;"><img src="${url}" style="max-width:100%; border-radius:20px;" onerror="this.src='https://placehold.co/500x300?text=Outfit+Not+Found'"></div>
+            `;
+            resultDiv.appendChild(div);
+            div.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        async function fetchBanner(uid) {
+            const url = `https://banner-views-pink.vercel.app/profile?uid=${uid}`;
+            const resultDiv = document.getElementById('infoResult');
+            const div = document.createElement('div');
+            div.className = 'result-card';
+            div.innerHTML = `
+                <div class="card-header"><div class="card-title"><i class="fas fa-image"></i> Player Banner</div><div class="card-subtitle">UID: ${uid}</div></div>
+                <div style="padding:20px; text-align:center;"><img src="${url}" style="max-width:100%; border-radius:20px;" onerror="this.src='https://placehold.co/500x200?text=Banner+Not+Found'"></div>
+            `;
+            resultDiv.appendChild(div);
+            div.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        // ======================== BAN CHECK ========================
         async function fetchBanCheck(uid) {
             const container = document.getElementById('banResult');
             container.innerHTML = '<div class="loader active" style="padding:20px;"><div class="spinner"></div><p>Checking ban status...</p></div>';
             
             try {
-                const res = await fetch(`${CORS_PROXY}https://silent-bancheck-api.vercel.app/bancheck?uid=${uid}`);
-                const data = await res.json();
+                const response = await fetch(`https://silent-bancheck-api.vercel.app/bancheck?uid=${uid}`);
+                const data = await response.json();
                 
-                const nickname = data.nickname || 'Unknown';
-                const region = data.region || 'N/A';
-                const banStatus = data.ban_status || 'Unknown';
-                const isBanned = banStatus.toLowerCase() !== 'not banned';
+                const isBanned = data.ban_status?.toLowerCase() !== 'not banned';
                 const statusIcon = isBanned ? '❌ BANNED' : '✅ NOT BANNED';
                 const statusColor = isBanned ? '#ff4757' : '#00ff88';
                 
                 container.innerHTML = `
-                    <div class="result-box">
-                        <div class="result-header"><h3><i class="fas fa-shield-alt"></i> SILENT BAN CHECK</h3></div>
-                        <div class="result-content"><pre>
+                    <div class="result-card">
+                        <div class="card-header"><div class="card-title"><i class="fas fa-shield-alt"></i> SILENT BAN CHECK</div></div>
+                        <div class="ascii-box">
+                            <pre>
 ┌─────────────────────────────────────────────────────────────────┐
 │ 🔍 SILENT BAN CHECK                                                   
 ├─────────────────────────────────────────────────────────────────────────┤
-│ PLAYER NAME: ${escapeHtml(nickname)}                                         
+│ PLAYER NAME: ${escapeHtml(data.nickname || 'Unknown')}                                         
 │ UID: ${uid}                                                       
-│ REGION: ${region.toUpperCase()}                                                 
+│ REGION: ${(data.region || 'N/A').toUpperCase()}                                                 
 ├─────────────────────────────────────────────────────────────────────────┤
 │ BAN STATUS: <span style="color:${statusColor};">${statusIcon}</span>                                               
 │ BAN PERIOD: ${data.ban_period || 'N/A'}                                        
 └─────────────────────────────────────────────────────────────────────────┘
 
-🔥 @SILENT_METHODE</pre></div>
+🔥 @SILENT_METHODE
+                            </pre>
+                        </div>
                     </div>
                 `;
-            } catch(e) {
-                container.innerHTML = `<div class="error-msg">❌ Ban Check Failed: ${e.message}</div>`;
+            } catch(err) {
+                container.innerHTML = `<div class="error-message">❌ Ban Check Failed: ${err.message}</div>`;
             }
         }
 
-        // ========== TOKEN GENERATOR ==========
+        // ======================== TOKEN GENERATOR ========================
         function showTokenForm() {
             const container = document.getElementById('tokenResult');
             container.innerHTML = `
-                <div class="result-box">
-                    <div class="result-header"><h3><i class="fas fa-key"></i> JWT Token Generator</h3></div>
+                <div class="result-card">
+                    <div class="card-header"><div class="card-title"><i class="fas fa-key"></i> JWT Token Generator</div><div class="card-subtitle">Generate access token using UID and password</div></div>
                     <div class="token-form">
-                        <div class="input-group"><label>📱 UID</label><input type="text" id="tokenUid" placeholder="Enter UID"></div>
-                        <div class="input-group"><label>🔐 Password</label><input type="password" id="tokenPass" placeholder="Enter Password"></div>
-                        <button class="gen-btn" onclick="generateToken()"><i class="fas fa-key"></i> Generate Token</button>
+                        <div class="input-group"><label><i class="fas fa-id-card"></i> UID</label><input type="text" id="tokenUid" placeholder="Enter UID"></div>
+                        <div class="input-group"><label><i class="fas fa-lock"></i> Password</label><input type="password" id="tokenPass" placeholder="Enter Password"></div>
+                        <button class="btn btn-primary" onclick="generateToken()" style="width:100%;"><i class="fas fa-key"></i> Generate Token</button>
                     </div>
                     <div id="tokenOutput"></div>
                 </div>
@@ -614,62 +922,49 @@
             const output = document.getElementById('tokenOutput');
             
             if(!uid || !password) {
-                output.innerHTML = `<div class="error-msg">⚠️ Please enter both UID and Password</div>`;
+                output.innerHTML = `<div class="error-message">⚠️ Please enter both UID and Password</div>`;
                 return;
             }
             
             output.innerHTML = '<div class="loader active" style="padding:20px;"><div class="spinner"></div><p>Generating token...</p></div>';
             
             try {
-                const res = await fetch(`${CORS_PROXY}https://uid-password-to-jwt-f1uw.vercel.app/token?uid=${uid}&password=${encodeURIComponent(password)}`);
-                const data = await res.json();
-                
-                const accountName = data.account_name || 'N/A';
-                const accountId = data.account_id || 'N/A';
-                const region = data.region || 'N/A';
-                const accessToken = data.access_token || 'N/A';
-                const jwtToken = data.token || 'N/A';
+                const response = await fetch(`https://uid-password-to-jwt-f1uw.vercel.app/token?uid=${uid}&password=${encodeURIComponent(password)}`);
+                const data = await response.json();
                 
                 output.innerHTML = `
-                    <div class="result-content"><pre>
+                    <div class="ascii-box">
+                        <pre>
 ┌──────────────────────────────────
 ├ 🔑 SILENT TOKEN INFORMATION
 ├──────────────────────────────────
-├ ACCOUNT NAME: ${escapeHtml(accountName)}
+├ ACCOUNT NAME: ${escapeHtml(data.account_name || 'N/A')}
 ├ UID: ${uid}
-├ ACCOUNT ID: ${accountId}
-├ REGION: ${region}
+├ ACCOUNT ID: ${data.account_id || 'N/A'}
+├ REGION: ${data.region || 'N/A'}
 ├──────────────────────────────────
 ├ ACCESS TOKEN:
-├ ${accessToken}
+├ ${data.access_token || 'N/A'}
 ├──────────────────────────────────
 ├ JWT TOKEN:
-├ ${jwtToken}
+├ ${data.token || 'N/A'}
 └──────────────────────────────────
 
-🔥 @SILENT_METHODE</pre></div>
+🔥 @SILENT_METHODE
+                        </pre>
+                    </div>
                 `;
-            } catch(e) {
-                output.innerHTML = `<div class="error-msg">❌ Token Generation Failed: ${e.message}</div>`;
+            } catch(err) {
+                output.innerHTML = `<div class="error-message">❌ Token Generation Failed: ${err.message}</div>`;
             }
         }
 
         function showError(msg, containerId) {
             const container = document.getElementById(containerId);
-            container.innerHTML = `<div class="error-msg">⚠️ ${escapeHtml(msg)}</div>`;
+            container.innerHTML = `<div class="error-message"><i class="fas fa-exclamation-triangle"></i> ${escapeHtml(msg)}</div>`;
             setTimeout(() => {
                 if(container.innerHTML.includes(msg)) container.innerHTML = '';
-            }, 4000);
-        }
-
-        function escapeHtml(str) {
-            if(!str) return '';
-            return String(str).replace(/[&<>]/g, function(m) {
-                if(m === '&') return '&amp;';
-                if(m === '<') return '&lt;';
-                if(m === '>') return '&gt;';
-                return m;
-            });
+            }, 5000);
         }
     </script>
 </body>
