@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>SILENT FF | Outfit & Banner Viewer</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <title>SILENT FF | Player Stats Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * {
@@ -15,418 +15,405 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background: #0a0a0f;
+            background: #0f0f1a;
             color: #fff;
-            overflow-x: hidden;
-            min-height: 100vh;
         }
 
-        /* Animated Background */
-        .bg-gradient {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -2;
-            background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 30%, #16213e 60%, #0f0f1a 100%);
-            background-size: 400% 400%;
-            animation: gradientFlow 12s ease infinite;
-        }
-
-        @keyframes gradientFlow {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* Glow Orbs */
-        .glow-orb {
-            position: fixed;
-            border-radius: 50%;
-            filter: blur(80px);
-            z-index: -1;
-            pointer-events: none;
-        }
-        .orb-1 {
-            width: 400px;
-            height: 400px;
-            background: rgba(255,71,87,0.2);
-            top: -100px;
-            left: -100px;
-            animation: floatOrb 20s ease infinite;
-        }
-        .orb-2 {
-            width: 500px;
-            height: 500px;
-            background: rgba(0,210,255,0.15);
-            bottom: -150px;
-            right: -150px;
-            animation: floatOrb 25s ease infinite reverse;
-        }
-        .orb-3 {
-            width: 300px;
-            height: 300px;
-            background: rgba(255,165,0,0.1);
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            animation: pulseOrb 8s ease infinite;
-        }
-        @keyframes floatOrb {
-            0%, 100% { transform: translate(0, 0); }
-            50% { transform: translate(30px, 30px); }
-        }
-        @keyframes pulseOrb {
-            0%, 100% { opacity: 0.3; transform: translate(-50%, -50%) scale(1); }
-            50% { opacity: 0.6; transform: translate(-50%, -50%) scale(1.2); }
-        }
-
-        /* Floating Particles */
-        .particles {
+        /* Simple Gradient Background */
+        .bg {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             z-index: -1;
-            pointer-events: none;
+            background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 100%);
         }
-        .particle {
-            position: absolute;
-            background: linear-gradient(135deg, #ff4757, #ff6b81);
-            border-radius: 50%;
-            opacity: 0.3;
-            animation: floatParticle linear infinite;
-        }
-        @keyframes floatParticle {
-            0% { transform: translateY(100vh) scale(0); opacity: 0; }
-            10% { opacity: 0.5; }
-            90% { opacity: 0.3; }
-            100% { transform: translateY(-20vh) scale(1); opacity: 0; }
-        }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 5px; }
-        ::-webkit-scrollbar-track { background: rgba(255,255,255,0.03); border-radius: 10px; }
-        ::-webkit-scrollbar-thumb { background: linear-gradient(135deg, #ff4757, #ff6b81); border-radius: 10px; }
 
         /* Navbar */
         .navbar {
-            padding: 18px 40px;
+            padding: 16px 40px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            backdrop-filter: blur(20px);
-            background: rgba(10, 10, 20, 0.3);
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            background: rgba(15, 15, 26, 0.95);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
             position: sticky;
             top: 0;
             z-index: 100;
         }
+
         .logo {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
+            font-size: 24px;
+            font-weight: 700;
         }
-        .logo-icon {
-            font-size: 34px;
-            animation: logoGlow 2s ease infinite;
+
+        .logo i {
+            color: #ff4757;
         }
-        @keyframes logoGlow {
-            0%, 100% { text-shadow: 0 0 5px #ff4757; transform: scale(1); }
-            50% { text-shadow: 0 0 20px #ff4757; transform: scale(1.05); }
-        }
-        .logo-text {
-            font-size: 26px;
-            font-weight: 800;
-            background: linear-gradient(135deg, #ff4757, #ff6b81, #ffa502);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+
         .nav-links {
             display: flex;
-            gap: 30px;
+            gap: 25px;
         }
+
         .nav-links a {
             color: #fff;
             text-decoration: none;
-            font-weight: 500;
-            transition: 0.3s;
             opacity: 0.7;
-            position: relative;
+            transition: 0.3s;
         }
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -6px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(90deg, #ff4757, #ff6b81);
-            transition: width 0.3s;
+
+        .nav-links a:hover {
+            opacity: 1;
+            color: #ff4757;
         }
-        .nav-links a:hover::after { width: 100%; }
-        .nav-links a:hover { opacity: 1; }
 
         /* Hero */
         .hero {
             text-align: center;
             padding: 50px 20px 35px;
         }
+
         .hero h1 {
-            font-size: 52px;
-            font-weight: 800;
-            background: linear-gradient(135deg, #ffffff, #ff4757, #ff6b81);
+            font-size: 44px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fff, #ff4757);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
+
         .hero p {
             color: rgba(255,255,255,0.5);
-            font-size: 18px;
+            font-size: 16px;
         }
 
         /* Search Box */
         .search-container {
-            max-width: 550px;
+            max-width: 500px;
             margin: 0 auto 40px;
             padding: 0 20px;
         }
+
         .search-box {
             display: flex;
-            gap: 12px;
-            background: rgba(255,255,255,0.03);
-            border-radius: 70px;
-            padding: 6px;
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255,255,255,0.08);
-            transition: all 0.3s ease;
+            gap: 10px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 5px;
+            border: 1px solid rgba(255,255,255,0.1);
         }
-        .search-box:focus-within {
-            border-color: #ff4757;
-            box-shadow: 0 0 25px rgba(255,71,87,0.3);
-            background: rgba(255,255,255,0.06);
-        }
+
         .search-box input {
             flex: 1;
             background: transparent;
             border: none;
-            padding: 15px 25px;
+            padding: 14px 20px;
             color: #fff;
-            font-size: 16px;
+            font-size: 15px;
             outline: none;
         }
+
         .search-box input::placeholder {
-            color: rgba(255,255,255,0.35);
+            color: rgba(255,255,255,0.4);
         }
+
         .search-box button {
-            background: linear-gradient(135deg, #ff4757, #ff6b81);
+            background: #ff4757;
             border: none;
-            padding: 12px 35px;
-            border-radius: 60px;
+            padding: 10px 28px;
+            border-radius: 10px;
             color: #fff;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .search-box button:hover {
-            transform: scale(1.02);
-            box-shadow: 0 8px 20px rgba(255,71,87,0.4);
+            transition: 0.3s;
         }
 
-        /* Tabs - Sirf Outfit aur Banner */
+        .search-box button:hover {
+            background: #ff6b81;
+        }
+
+        /* Tabs */
         .tabs {
             display: flex;
             justify-content: center;
-            gap: 18px;
-            margin-bottom: 35px;
-            flex-wrap: wrap;
-        }
-        .tab-btn {
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.1);
-            padding: 12px 35px;
-            border-radius: 50px;
-            color: #fff;
-            font-weight: 600;
-            font-size: 15px;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .tab-btn:hover {
-            background: rgba(255,71,87,0.15);
-            border-color: rgba(255,71,87,0.4);
-            transform: translateY(-2px);
-        }
-        .tab-btn.active {
-            background: linear-gradient(135deg, #ff4757, #ff6b81);
-            border-color: transparent;
-            box-shadow: 0 5px 15px rgba(255,71,87,0.3);
-        }
-
-        /* Cards Container */
-        .cards-container {
-            max-width: 750px;
-            margin: 0 auto;
-            padding: 0 20px 40px;
-        }
-
-        /* Glass Card */
-        .glass-card {
-            background: rgba(255,255,255,0.03);
-            backdrop-filter: blur(15px);
-            border-radius: 32px;
-            border: 1px solid rgba(255,255,255,0.08);
-            overflow: hidden;
-            margin-bottom: 25px;
-            animation: slideUp 0.5s ease;
-            transition: all 0.3s;
-        }
-        .glass-card:hover {
-            border-color: rgba(255,71,87,0.3);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Card Header */
-        .card-header {
-            background: linear-gradient(135deg, rgba(255,71,87,0.1), rgba(255,107,129,0.03));
-            padding: 20px 25px;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-        .card-title {
-            font-size: 20px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
             gap: 12px;
-        }
-        .card-title i {
-            color: #ff4757;
-            font-size: 24px;
-        }
-        .card-subtitle {
-            font-size: 12px;
-            color: rgba(255,255,255,0.45);
-            margin-top: 8px;
-            font-family: monospace;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            padding: 0 20px;
         }
 
-        /* Image Container */
-        .image-container {
-            padding: 25px;
-            text-align: center;
-        }
-        .image-container img {
-            max-width: 100%;
-            border-radius: 24px;
-            cursor: pointer;
-            transition: all 0.3s;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-        .image-container img:hover {
-            transform: scale(1.02);
-            border-color: rgba(255,71,87,0.3);
-            box-shadow: 0 10px 30px rgba(255,71,87,0.2);
-        }
-
-        /* Download Button */
-        .download-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
+        .tab-btn {
             background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-            padding: 10px 20px;
-            border-radius: 40px;
+            border: 1px solid rgba(255,255,255,0.08);
+            padding: 10px 24px;
+            border-radius: 30px;
             color: #fff;
-            font-size: 13px;
             font-weight: 500;
             cursor: pointer;
-            transition: all 0.3s;
-            text-decoration: none;
-            margin-top: 10px;
+            transition: 0.3s;
+            font-size: 14px;
         }
-        .download-btn:hover {
+
+        .tab-btn:hover {
             background: rgba(255,71,87,0.15);
-            border-color: rgba(255,71,87,0.4);
+            border-color: #ff4757;
+        }
+
+        .tab-btn.active {
+            background: #ff4757;
+            border-color: #ff4757;
         }
 
         /* Loader */
         .loader {
             display: none;
             text-align: center;
-            padding: 50px;
+            padding: 40px;
         }
+
         .loader.active {
             display: block;
         }
+
         .spinner {
-            width: 50px;
-            height: 50px;
-            border: 3px solid rgba(255,71,87,0.15);
-            border-top: 3px solid #ff4757;
-            border-right: 3px solid #ff6b81;
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(255,71,87,0.2);
+            border-top-color: #ff4757;
             border-radius: 50%;
-            animation: spin 0.7s linear infinite;
-            margin: 0 auto 15px;
+            animation: spin 0.6s linear infinite;
+            margin: 0 auto 12px;
         }
-        @keyframes spin { to { transform: rotate(360deg); } }
-        .loader p {
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Cards */
+        .result-card {
+            max-width: 750px;
+            margin: 0 auto 25px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.08);
+            overflow: hidden;
+        }
+
+        .card-header {
+            background: rgba(255,71,87,0.08);
+            padding: 18px 22px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-title i {
+            color: #ff4757;
+        }
+
+        .card-sub {
+            font-size: 12px;
             color: rgba(255,255,255,0.5);
+            margin-top: 6px;
+        }
+
+        /* Info Grid */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 12px;
+            padding: 20px;
+        }
+
+        .info-item {
+            background: rgba(255,255,255,0.03);
+            border-radius: 14px;
+            padding: 12px 15px;
+        }
+
+        .info-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 5px;
+            letter-spacing: 0.5px;
+        }
+
+        .info-value {
+            font-size: 15px;
+            font-weight: 600;
+            word-break: break-word;
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+            height: 4px;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: #ff4757;
+            height: 100%;
+            width: 0%;
+            transition: width 0.4s;
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 600;
+        }
+        .badge-success { background: rgba(0,255,136,0.15); color: #00ff88; }
+        .badge-warning { background: rgba(255,165,0,0.15); color: #ffa502; }
+        .badge-danger { background: rgba(255,71,87,0.15); color: #ff4757; }
+        .badge-info { background: rgba(0,210,255,0.15); color: #00d2ff; }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            padding: 0 20px 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 10px;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            transition: 0.3s;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .btn-primary {
+            background: #ff4757;
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: #ff6b81;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.15);
+            color: #fff;
+        }
+
+        .btn-outline:hover {
+            border-color: #ff4757;
+            background: rgba(255,71,87,0.1);
+        }
+
+        /* Token Form */
+        .token-form {
+            padding: 20px;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        .input-group label {
+            display: block;
+            font-size: 13px;
+            margin-bottom: 6px;
+            color: rgba(255,255,255,0.7);
+        }
+        .input-group input {
+            width: 100%;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 12px 15px;
+            color: #fff;
             font-size: 14px;
+            outline: none;
+        }
+        .input-group input:focus {
+            border-color: #ff4757;
+        }
+        .gen-btn {
+            width: 100%;
+            background: #ff4757;
+            border: none;
+            padding: 12px;
+            border-radius: 12px;
+            color: #fff;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 5px;
+        }
+        .gen-btn:hover {
+            background: #ff6b81;
+        }
+
+        /* JSON Pre */
+        .json-pre {
+            background: rgba(0,0,0,0.4);
+            padding: 15px;
+            border-radius: 12px;
+            overflow-x: auto;
+            font-size: 11px;
+            font-family: monospace;
+            color: #00ffaa;
+            margin: 0 20px 20px;
+        }
+
+        /* Image Container */
+        .img-container {
+            padding: 20px;
+            text-align: center;
+        }
+        .img-container img {
+            max-width: 100%;
+            border-radius: 16px;
+        }
+        .download-btn {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 8px 16px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 30px;
+            color: #fff;
+            font-size: 12px;
+            text-decoration: none;
+        }
+        .download-btn:hover {
+            background: #ff4757;
         }
 
         /* Error */
-        .error-message {
-            max-width: 500px;
-            margin: 20px auto;
+        .error-msg {
             padding: 20px;
             background: rgba(255,71,87,0.1);
             border: 1px solid rgba(255,71,87,0.3);
-            border-radius: 24px;
+            border-radius: 16px;
             text-align: center;
             color: #ff6b81;
-        }
-
-        /* Modal */
-        .image-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.95);
-            backdrop-filter: blur(15px);
-            z-index: 1000;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-        }
-        .image-modal.active {
-            display: flex;
-            animation: fadeIn 0.3s;
-        }
-        .image-modal img {
-            max-width: 90%;
-            max-height: 90%;
-            border-radius: 20px;
-            box-shadow: 0 0 50px rgba(255,71,87,0.3);
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            margin: 20px;
         }
 
         /* Footer */
@@ -434,219 +421,302 @@
             text-align: center;
             padding: 30px;
             color: rgba(255,255,255,0.3);
-            font-size: 13px;
-            border-top: 1px solid rgba(255,255,255,0.03);
-            margin-top: 30px;
+            font-size: 12px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            margin-top: 40px;
         }
+
         .footer a {
             color: #ff4757;
             text-decoration: none;
         }
 
+        .hidden {
+            display: none;
+        }
+
         @media (max-width: 600px) {
-            .navbar { padding: 15px 25px; }
-            .logo-text { font-size: 20px; }
-            .logo-icon { font-size: 28px; }
-            .hero h1 { font-size: 32px; }
-            .search-box { flex-direction: column; border-radius: 30px; padding: 15px; }
-            .search-box button { padding: 12px; }
-            .tab-btn { padding: 8px 22px; font-size: 13px; }
-            .card-title { font-size: 18px; }
+            .navbar { padding: 12px 20px; }
+            .logo { font-size: 18px; }
+            .hero h1 { font-size: 28px; }
+            .info-grid { grid-template-columns: 1fr; }
+            .action-buttons { flex-direction: column; }
         }
     </style>
 </head>
 <body>
-    <div class="bg-gradient"></div>
-    <div class="glow-orb orb-1"></div>
-    <div class="glow-orb orb-2"></div>
-    <div class="glow-orb orb-3"></div>
-    <div class="particles" id="particles"></div>
+    <div class="bg"></div>
 
     <nav class="navbar">
-        <div class="logo">
-            <span class="logo-icon">🔥</span>
-            <span class="logo-text">SILENT <span>FF</span></span>
-        </div>
+        <div class="logo"><i class="fas fa-fire"></i> SILENT FF</div>
         <div class="nav-links">
-            <a href="https://t.me/SILENT_GAM3R" target="_blank"><i class="fab fa-telegram"></i> Channel</a>
+            <a href="https://t.me/SILENT_GAM3R" target="_blank">Channel</a>
         </div>
     </nav>
 
     <div class="hero">
-        <h1>Outfit & Banner Viewer</h1>
-        <p>Enter any UID to view player's outfit and banner</p>
+        <h1>Free Fire Player Stats</h1>
+        <p>Enter UID to get player info, ban status, token & more</p>
     </div>
 
     <div class="search-container">
         <div class="search-box">
-            <input type="text" id="uidInput" placeholder="Enter UID (e.g., 1576195175, 3560222916)" onkeypress="if(event.key==='Enter') searchPlayer()">
+            <input type="text" id="uidInput" placeholder="Enter UID (e.g., 1576195175)" onkeypress="if(event.key==='Enter') searchPlayer()">
             <button onclick="searchPlayer()"><i class="fas fa-search"></i> Search</button>
         </div>
     </div>
 
     <div class="tabs">
-        <button class="tab-btn active" onclick="showTab('outfit')"><i class="fas fa-tshirt"></i> Outfit</button>
-        <button class="tab-btn" onclick="showTab('banner')"><i class="fas fa-image"></i> Banner</button>
+        <button class="tab-btn active" onclick="showTab('info')">📊 Player Info</button>
+        <button class="tab-btn" onclick="showTab('ban')">🛡️ Ban Check</button>
+        <button class="tab-btn" onclick="showTab('token')">🔑 Token</button>
+        <button class="tab-btn" onclick="showTab('outfit')">👕 Outfit</button>
+        <button class="tab-btn" onclick="showTab('banner')">🖼️ Banner</button>
     </div>
 
-    <div class="loader" id="loader">
-        <div class="spinner"></div>
-        <p>Fetching from SILENT API...</p>
-    </div>
+    <div class="loader" id="loader"><div class="spinner"></div><p>Loading...</p></div>
 
-    <div class="cards-container" id="resultContainer"></div>
-
-    <div id="imageModal" class="image-modal" onclick="closeModal()">
-        <img id="modalImage" src="">
-    </div>
+    <div id="infoResult"></div>
+    <div id="banResult" class="hidden"></div>
+    <div id="tokenResult" class="hidden"></div>
+    <div id="outfitResult" class="hidden"></div>
+    <div id="bannerResult" class="hidden"></div>
 
     <div class="footer">
-        <p>🔥 Powered by <strong>SILENT API</strong> | 📢 <a href="https://t.me/SILENT_GAM3R" target="_blank">@SILENT_GAM3R</a></p>
+        <p>🔥 Powered by SILENT API | 📢 <a href="https://t.me/SILENT_GAM3R" target="_blank">@SILENT_GAM3R</a></p>
         <p>👨‍💻 Developer: <a href="https://t.me/SIL3NT_KILLER" target="_blank">@SIL3NT_KILLER</a></p>
     </div>
 
     <script>
-        // Particles
-        function createParticles() {
-            const container = document.getElementById('particles');
-            for(let i = 0; i < 100; i++) {
-                const p = document.createElement('div');
-                p.classList.add('particle');
-                p.style.width = Math.random() * 5 + 2 + 'px';
-                p.style.height = p.style.width;
-                p.style.left = Math.random() * 100 + '%';
-                p.style.animationDuration = 5 + Math.random() * 15 + 's';
-                p.style.animationDelay = Math.random() * 15 + 's';
-                container.appendChild(p);
-            }
-        }
-        createParticles();
-
         let currentUid = '';
         let currentRegion = 'ind';
 
         function showTab(tab) {
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            if(tab === 'outfit') document.querySelector('.tabs button:nth-child(1)').classList.add('active');
-            if(tab === 'banner') document.querySelector('.tabs button:nth-child(2)').classList.add('active');
+            const tabs = ['info', 'ban', 'token', 'outfit', 'banner'];
+            tabs.forEach(t => document.getElementById(t + 'Result').classList.add('hidden'));
             
-            if(currentUid) {
-                if(tab === 'outfit') fetchOutfit(currentUid, currentRegion);
-                if(tab === 'banner') fetchBanner(currentUid);
-            }
+            if(tab === 'info') document.querySelector('.tabs button:nth-child(1)').classList.add('active');
+            if(tab === 'ban') document.querySelector('.tabs button:nth-child(2)').classList.add('active');
+            if(tab === 'token') document.querySelector('.tabs button:nth-child(3)').classList.add('active');
+            if(tab === 'outfit') document.querySelector('.tabs button:nth-child(4)').classList.add('active');
+            if(tab === 'banner') document.querySelector('.tabs button:nth-child(5)').classList.add('active');
+            
+            document.getElementById(tab + 'Result').classList.remove('hidden');
+            
+            if(tab === 'ban' && currentUid) fetchBanCheck(currentUid);
+            if(tab === 'token') showTokenForm();
+            if(tab === 'outfit' && currentUid) fetchOutfit(currentUid, currentRegion);
+            if(tab === 'banner' && currentUid) fetchBanner(currentUid);
         }
 
         async function searchPlayer() {
             const uid = document.getElementById('uidInput').value.trim();
-            if(!uid) {
-                showError('Please enter a UID');
-                return;
-            }
-            if(!/^\d{8,11}$/.test(uid)) {
-                showError('Invalid UID! Must be 8-11 digits');
-                return;
-            }
+            if(!uid) { showError('Enter UID', 'infoResult'); return; }
+            if(!/^\d{8,11}$/.test(uid)) { showError('Invalid UID', 'infoResult'); return; }
             
             currentUid = uid;
             const loader = document.getElementById('loader');
-            const resultContainer = document.getElementById('resultContainer');
+            const resultDiv = document.getElementById('infoResult');
             
             loader.classList.add('active');
-            resultContainer.innerHTML = '';
+            resultDiv.innerHTML = '';
+            resultDiv.classList.remove('hidden');
             
             try {
-                // Get region first
+                // Get region
                 const regionRes = await fetch(`https://region-check-six.vercel.app/?uid=${uid}`);
                 const regionData = await regionRes.json();
                 currentRegion = (regionData.region || 'ind').toLowerCase();
                 
-                // Show active tab content
-                const activeTab = document.querySelector('.tab-btn.active').innerText.toLowerCase();
-                if(activeTab.includes('outfit')) {
-                    fetchOutfit(uid, currentRegion);
-                } else {
-                    fetchBanner(uid);
-                }
+                // Get player info
+                const infoRes = await fetch(`https://mafuuuu-info-api.vercel.app/mafu-info?uid=${uid}`);
+                const data = await infoRes.json();
+                displayPlayerInfo(data, uid);
             } catch(err) {
-                // Fallback region
-                currentRegion = 'ind';
-                fetchOutfit(uid, 'ind');
+                showError('Failed to fetch: ' + err.message, 'infoResult');
             } finally {
                 loader.classList.remove('active');
             }
         }
 
-        async function fetchOutfit(uid, region) {
-            const resultContainer = document.getElementById('resultContainer');
-            const regionLower = region.toLowerCase();
-            const imageUrl = `https://silent-outfit-api.vercel.app/outfit-image?uid=${uid}&region=${regionLower}&key=SILENT`;
+        function displayPlayerInfo(data, uid) {
+            const basic = data.basicInfo || {};
+            const clan = data.clanBasicInfo || {};
+            const credit = data.creditScoreInfo || {};
+            const social = data.socialInfo || {};
             
-            resultContainer.innerHTML = `
-                <div class="glass-card">
+            const name = basic.nickname || 'Unknown';
+            const region = basic.region || 'N/A';
+            const level = basic.level || 'N/A';
+            const exp = basic.exp || '0';
+            const likes = basic.liked || '0';
+            const brPoints = basic.rankingPoints || '0';
+            const csPoints = basic.csRankingPoints || '0';
+            const creditScore = credit.creditScore || '0';
+            const created = basic.createAt || '0';
+            const signature = social.signature || 'No bio';
+            const guild = clan.clanName || 'No Guild';
+            
+            // Ranks
+            let brRank = 'Bronze';
+            let br = parseInt(brPoints);
+            if(br >= 1000) brRank = 'Silver';
+            if(br >= 2000) brRank = 'Gold';
+            if(br >= 3000) brRank = 'Platinum';
+            if(br >= 4000) brRank = 'Diamond';
+            if(br >= 5000) brRank = 'Heroic';
+            if(br >= 6000) brRank = 'Mythic';
+            if(br >= 7000) brRank = 'Grandmaster';
+            
+            let csRank = 'Bronze I';
+            let cs = parseInt(csPoints);
+            if(cs >= 20) csRank = 'Bronze II';
+            if(cs >= 40) csRank = 'Silver I';
+            if(cs >= 60) csRank = 'Silver II';
+            if(cs >= 80) csRank = 'Gold I';
+            if(cs >= 100) csRank = 'Gold II';
+            if(cs >= 120) csRank = 'Gold III';
+            if(cs >= 140) csRank = 'Elite';
+            
+            let creditClass = 'badge-danger';
+            let creditText = 'Poor';
+            if(creditScore >= 90) { creditClass = 'badge-success'; creditText = 'Excellent'; }
+            else if(creditScore >= 70) { creditClass = 'badge-success'; creditText = 'Good'; }
+            else if(creditScore >= 50) { creditClass = 'badge-warning'; creditText = 'Fair'; }
+            
+            const createdDate = (created && created !== '0') ? new Date(parseInt(created)*1000).toLocaleDateString() : 'N/A';
+            const expProgress = (parseInt(exp) % 50000) / 50000 * 100;
+            
+            const html = `
+                <div class="result-card">
                     <div class="card-header">
-                        <div class="card-title">
-                            <i class="fas fa-tshirt"></i> Player Outfit
+                        <div class="card-title"><i class="fas fa-user"></i> ${escapeHtml(name)} <span class="badge badge-info">Level ${level}</span></div>
+                        <div class="card-sub">📱 ${uid} | 🌍 ${region.toUpperCase()}</div>
+                    </div>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-label">🏆 BR RANK</div>
+                            <div class="info-value">${brRank}</div>
+                            <div class="progress-bar"><div class="progress-fill" style="width: ${Math.min(100, br/7000*100)}%"></div></div>
+                            <div style="font-size:11px">${br.toLocaleString()} pts</div>
                         </div>
-                        <div class="card-subtitle">
-                            <i class="fas fa-id-card"></i> UID: ${uid} | 
-                            <i class="fas fa-globe"></i> Region: ${regionLower.toUpperCase()}
+                        <div class="info-item">
+                            <div class="info-label">🎮 CS RANK</div>
+                            <div class="info-value">${csRank}</div>
+                            <div class="progress-bar"><div class="progress-fill" style="width: ${Math.min(100, cs/150*100)}%"></div></div>
+                            <div style="font-size:11px">${cs.toLocaleString()} pts</div>
+                        </div>
+                        <div class="info-item"><div class="info-label">❤️ LIKES</div><div class="info-value">${parseInt(likes).toLocaleString()}</div></div>
+                        <div class="info-item"><div class="info-label">💳 CREDIT</div><div class="info-value"><span class="badge ${creditClass}">${creditScore} (${creditText})</span></div></div>
+                        <div class="info-item"><div class="info-label">📈 EXP</div><div class="info-value">${parseInt(exp).toLocaleString()} XP</div><div class="progress-bar"><div class="progress-fill" style="width: ${expProgress}%"></div></div></div>
+                        <div class="info-item"><div class="info-label">📅 CREATED</div><div class="info-value">${createdDate}</div></div>
+                        <div class="info-item"><div class="info-label">✍️ SIGNATURE</div><div class="info-value" style="font-size:13px">${escapeHtml(signature)}</div></div>
+                        <div class="info-item"><div class="info-label">🏛️ GUILD</div><div class="info-value">${escapeHtml(guild)}</div></div>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary" onclick="showTab('outfit'); fetchOutfit('${uid}', '${region}')"><i class="fas fa-tshirt"></i> Outfit</button>
+                        <button class="btn btn-outline" onclick="showTab('banner'); fetchBanner('${uid}')"><i class="fas fa-image"></i> Banner</button>
+                    </div>
+                </div>
+            `;
+            document.getElementById('infoResult').innerHTML = html;
+        }
+
+        async function fetchBanCheck(uid) {
+            const container = document.getElementById('banResult');
+            container.innerHTML = '<div class="loader active" style="padding:20px"><div class="spinner"></div></div>';
+            
+            try {
+                const res = await fetch(`https://silent-bancheck-api.vercel.app/bancheck?uid=${uid}`);
+                const data = await res.json();
+                const isBanned = data.ban_status?.toLowerCase() !== 'not banned';
+                container.innerHTML = `
+                    <div class="result-card">
+                        <div class="card-header"><div class="card-title"><i class="fas fa-shield-alt"></i> Ban Check Result</div></div>
+                        <div class="info-grid">
+                            <div class="info-item"><div class="info-label">Player</div><div class="info-value">${escapeHtml(data.nickname || 'N/A')}</div></div>
+                            <div class="info-item"><div class="info-label">UID</div><div class="info-value">${uid}</div></div>
+                            <div class="info-item"><div class="info-label">Region</div><div class="info-value">${(data.region || 'N/A').toUpperCase()}</div></div>
+                            <div class="info-item"><div class="info-label">Status</div><div class="info-value"><span class="badge ${isBanned ? 'badge-danger' : 'badge-success'}">${isBanned ? '❌ BANNED' : '✅ NOT BANNED'}</span></div></div>
+                            <div class="info-item"><div class="info-label">Ban Period</div><div class="info-value">${data.ban_period || 'N/A'}</div></div>
                         </div>
                     </div>
-                    <div class="image-container">
-                        <img src="${imageUrl}" alt="Player Outfit" onclick="openModal('${imageUrl}')" onerror="this.src='https://placehold.co/600x400/1a1a2e/ff4757?text=Outfit+Not+Found'">
-                        <div>
-                            <a href="${imageUrl}" download="outfit_${uid}.jpg" class="download-btn">
-                                <i class="fas fa-download"></i> Download Outfit
-                            </a>
-                        </div>
+                `;
+            } catch(e) {
+                container.innerHTML = `<div class="error-msg">Error: ${e.message}</div>`;
+            }
+        }
+
+        function showTokenForm() {
+            const container = document.getElementById('tokenResult');
+            container.innerHTML = `
+                <div class="result-card">
+                    <div class="card-header"><div class="card-title"><i class="fas fa-key"></i> JWT Token Generator</div></div>
+                    <div class="token-form">
+                        <div class="input-group"><label>UID</label><input type="text" id="tokenUid" placeholder="Enter UID"></div>
+                        <div class="input-group"><label>Password</label><input type="password" id="tokenPass" placeholder="Enter Password"></div>
+                        <button class="gen-btn" onclick="generateToken()">Generate Token</button>
+                    </div>
+                    <div id="tokenOutput"></div>
+                </div>
+            `;
+        }
+
+        async function generateToken() {
+            const uid = document.getElementById('tokenUid')?.value.trim();
+            const pass = document.getElementById('tokenPass')?.value.trim();
+            const output = document.getElementById('tokenOutput');
+            if(!uid || !pass) { output.innerHTML = '<div class="error-msg">Enter UID and Password</div>'; return; }
+            output.innerHTML = '<div class="loader active" style="padding:20px"><div class="spinner"></div></div>';
+            
+            try {
+                const res = await fetch(`https://uid-password-to-jwt-f1uw.vercel.app/token?uid=${uid}&password=${encodeURIComponent(pass)}`);
+                const data = await res.json();
+                output.innerHTML = `<div class="json-pre">${JSON.stringify(data, null, 2)}</div>`;
+            } catch(e) {
+                output.innerHTML = `<div class="error-msg">Error: ${e.message}</div>`;
+            }
+        }
+
+        async function fetchOutfit(uid, region) {
+            const container = document.getElementById('outfitResult');
+            const regionLower = region.toLowerCase();
+            const imgUrl = `https://silent-outfit-api.vercel.app/outfit-image?uid=${uid}&region=${regionLower}&key=SILENT`;
+            container.innerHTML = `
+                <div class="result-card">
+                    <div class="card-header"><div class="card-title"><i class="fas fa-tshirt"></i> Player Outfit</div><div class="card-sub">UID: ${uid} | Region: ${regionUpper}</div></div>
+                    <div class="img-container">
+                        <img src="${imgUrl}" onerror="this.src='https://placehold.co/500x300/1a1a2e/ff4757?text=Outfit+Not+Found'">
+                        <a href="${imgUrl}" download="outfit_${uid}.jpg" class="download-btn"><i class="fas fa-download"></i> Download</a>
                     </div>
                 </div>
             `;
         }
 
         async function fetchBanner(uid) {
-            const resultContainer = document.getElementById('resultContainer');
-            const imageUrl = `https://banner-views-pink.vercel.app/profile?uid=${uid}`;
-            
-            resultContainer.innerHTML = `
-                <div class="glass-card">
-                    <div class="card-header">
-                        <div class="card-title">
-                            <i class="fas fa-image"></i> Player Banner
-                        </div>
-                        <div class="card-subtitle">
-                            <i class="fas fa-id-card"></i> UID: ${uid}
-                        </div>
-                    </div>
-                    <div class="image-container">
-                        <img src="${imageUrl}" alt="Player Banner" onclick="openModal('${imageUrl}')" onerror="this.src='https://placehold.co/800x300/1a1a2e/ff4757?text=Banner+Not+Found'">
-                        <div>
-                            <a href="${imageUrl}" download="banner_${uid}.jpg" class="download-btn">
-                                <i class="fas fa-download"></i> Download Banner
-                            </a>
-                        </div>
+            const container = document.getElementById('bannerResult');
+            const imgUrl = `https://banner-views-pink.vercel.app/profile?uid=${uid}`;
+            container.innerHTML = `
+                <div class="result-card">
+                    <div class="card-header"><div class="card-title"><i class="fas fa-image"></i> Player Banner</div><div class="card-sub">UID: ${uid}</div></div>
+                    <div class="img-container">
+                        <img src="${imgUrl}" onerror="this.src='https://placehold.co/800x300/1a1a2e/ff4757?text=Banner+Not+Found'">
+                        <a href="${imgUrl}" download="banner_${uid}.jpg" class="download-btn"><i class="fas fa-download"></i> Download</a>
                     </div>
                 </div>
             `;
         }
 
-        function openModal(imgSrc) {
-            const modal = document.getElementById('imageModal');
-            const modalImg = document.getElementById('modalImage');
-            modalImg.src = imgSrc;
-            modal.classList.add('active');
+        function showError(msg, containerId) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = `<div class="error-msg">⚠️ ${escapeHtml(msg)}</div>`;
+            setTimeout(() => { if(container.innerHTML.includes(msg)) container.innerHTML = ''; }, 4000);
         }
 
-        function closeModal() {
-            document.getElementById('imageModal').classList.remove('active');
-        }
-
-        function showError(msg) {
-            const resultContainer = document.getElementById('resultContainer');
-            resultContainer.innerHTML = `<div class="error-message"><i class="fas fa-exclamation-triangle"></i> ${msg}</div>`;
-            setTimeout(() => {
-                if(resultContainer.innerHTML.includes(msg)) resultContainer.innerHTML = '';
-            }, 4000);
+        function escapeHtml(str) {
+            if(!str) return '';
+            return String(str).replace(/[&<>]/g, m => m === '&' ? '&amp;' : (m === '<' ? '&lt;' : '&gt;'));
         }
     </script>
 </body>
